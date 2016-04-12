@@ -10,4 +10,4 @@ RUN git clone -b smchet https://github.com/ivazquez/cloneHD.git
 RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
 RUN git clone -b smchet https://github.com/ivazquez/cloneHD-tools.git
-RUN cd cloneHD-tools && pip install .
+RUN cd cloneHD-tools && python setup.py install

@@ -24,7 +24,7 @@
 		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="10" optional="true"/>
 		<param name="nmax" type="integer" label="The maximum number of subclones to be tried" help="" value="3"/>
 		<param name="max_tcn" type="integer" label="The maximum total copy number to be available" help="" value="4"/>
-		<param name="min_jump" type="float" label="Jump probability threshold" help="" value="1E-2" optional="true" optional="true"/>
+		<param name="min_jump" type="float" label="Jump probability threshold" help="" value="1E-2" optional="true"/>
 		<param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="10" optional="true"/>
 		<param format="tabular" name="mean_tcn" type="data" label="Use a fixed mean total copy number for SNV data" help=""/>
 		<param format="tabular" name="avail_cn" type="data" label="Use SNV copy number availablility constraint" help=""/>
