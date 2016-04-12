@@ -1,0 +1,54 @@
+<tool id="filterHD_1" name="filterHD 1 - CNA without bias" version="0.1.0">
+
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+	
+	<requirements>
+		<container type="docker">clonehd:smchet</container>
+	</requirements>
+	
+	<command>
+	/opt/cloneHD/build/filterHD --data ${cna} --mode ${mode} --pre ${sample_type}.cna
+	</command>
+
+	<inputs>
+        <!--<conditional name="conditional_bloc" >-->
+        <!--    <param name="sample_type" type="select" label="Type of sample" help="" >-->
+        <!--        <option value="tumor" selected="true">Tumor</option>-->
+        <!--        <option value="normal">Normal</option>-->
+        <!--    </param>-->
+        <!--        <when value="tumor">-->
+        <!--            <param name="simple_param" type="text" value="dummy" />-->
+        <!--        </when>-->
+        <!--        <when value="normal">-->
+        <!--            <param name="complex_param1" type="text" value="dummy" />-->
+        <!--            <param name="complex_param2" type="text" value="dummy" />-->
+        <!--        </when>-->
+        <!--</conditional>-->
+	    <param name="sample_type" type="select" label="Type of sample">
+	        <option value="tumor">Tumor</option>
+	        <option value="normal">Normal</option>
+	    </param>
+		<param format="tabular" name="cna" type="data" label="Read depth data file" help="" value="${sample_type}.cna.txt"/>
+		<param type="integer" name="mode" label="Mode" help="" value="3"/>
+	</inputs>
+
+	<outputs>
+	    <data format="tabular" name="cna_posterior" type="data" label="tumor.cna.posterior-1.txt" >
+	        <filter>sample_type == "tumor"</filter>
+        </data>
+	    <data format="tabular" name="cna_posterior" type="data" label="normal.cna.posterior-1.txt" >
+	        <filter>sample_type == "normal"</filter>
+	    </data>
+		<!--<data format="tabular" name="cna_posterior" type="data" label="tumor.cna.posterior-1.txt"/>-->
+		<!--<data format="tabular" name="cna_posterior" type="data" label="cna posterior" from_work_dir="tumor.cna.posterior-1.txt"/>-->
+	</outputs>
+
+	<help>
+	  The normal read depth is analysed to estimate the technical read depth modulation. This will be later used to account
+	  for the bias field in cloneHD. In principal, jumps are not expected (so could set --jump 0). The simulations do not have 
+	  random emissions.
+	</help>
+
+</tool>

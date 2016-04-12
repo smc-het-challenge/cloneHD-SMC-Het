@@ -1,0 +1,50 @@
+<tool id="cloneHD_2" name="cloneHD 2 - SNV" version="0.1.0">
+
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+	
+	<requirements>
+		<container type="docker">clonehd:smchet</container>
+	</requirements>
+	
+	<command>
+	<![CDATA[
+	/opt/cloneHD/build/cloneHD 
+	--snv ${snv} --pre tumorSNV
+	--seed 123 --trials ${trials}
+	--nmax ${nmax} --force --max-tcn ${max_tcn} 
+	--min-jump ${min_jump} --restarts ${restarts} 
+	--mean-tcn ${mean_tcn} --avail-cn ${avail_cn}
+	]]>
+	</command>
+
+	<inputs>
+		<param format="tabular" name="snv" type="data" label="Somatic nucleotide variant read count data file" help=""/>
+		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="10" optional="true"/>
+		<param name="nmax" type="integer" label="The maximum number of subclones to be tried" help="" value="3"/>
+		<param name="max_tcn" type="integer" label="The maximum total copy number to be available" help="" value="4"/>
+		<param name="min_jump" type="float" label="Jump probability threshold" help="" value="1E-2" optional="true" optional="true"/>
+		<param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="10" optional="true"/>
+		<param format="tabular" name="mean_tcn" type="data" label="Use a fixed mean total copy number for SNV data" help=""/>
+		<param format="tabular" name="avail_cn" type="data" label="Use SNV copy number availablility constraint" help=""/>
+	</inputs>
+
+	<outputs>
+		<data format="tabular" name="margin_map" type="data" label="tumorSNV.margin_map.txt"/>
+		<data format="tabular" name="snv_posterior" type="data" label="tumorSNV.snv.posterior.txt"/>
+		<data format="tabular" name="snv_subclone" type="data" label="tumorSNV.snv.subclone.txt"/>
+		<data format="tabular" name="snv_used_mean_tcn" type="data" label="tumorSNV.snv.used-mean-tcn.txt"/>
+		<data format="tabular" name="summary" type="data" label="tumorSNV.summary.txt"/>
+		<!--<data format="tabular" name="margin_map" type="data" label="Margin map" from_work_dir="tumorSNV.margin_map.txt"/>-->
+		<!--<data format="tabular" name="snv_posterior" type="data" label="snv posterior" from_work_dir="tumorSNV.snv.posterior.txt"/>-->
+		<!--<data format="tabular" name="snv_subclone" type="data" label="snv subclone" from_work_dir="tumorSNV.snv.subclone.txt"/>-->
+		<!--<data format="tabular" name="snv_used_mean_tcn" type="data" label="snv used mean total copy number" from_work_dir="tumorSNV.snv.used-mean-tcn.txt"/>-->
+		<!--<data format="tabular" name="summary" type="data" label="Summary" from_work_dir="tumorSNV.summary.txt"/>-->
+	</outputs>
+	
+	<help>
+	   Using the subclonality analysis with CNA and BAF data, the SNV data is analysed.
+	</help>
+
+</tool>
