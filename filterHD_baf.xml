@@ -33,8 +33,6 @@
 	<outputs>
 		<data format="tabular" name="baf_jumps" type="data" label="tumor.baf.jumps.txt"/>
 		<data format="tabular" name="baf_posterior" type="data" label="tumor.baf.posterior-1.txt"/>
-		<!--<data format="tabular" name="baf_jumps" type="data" label="baf jumps file" from_work_dir="tumor.baf.jumps.txt"/>-->
-		<!--<data format="tabular" name="baf_posterior" type="data" label="baf posterior" from_work_dir="tumor.baf.posterior-1.txt"/>-->
 	</outputs>
 
 	<help>

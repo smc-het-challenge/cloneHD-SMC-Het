@@ -20,7 +20,6 @@ ${vcf_file}
         <param name="input_type" value="Variant Input Type" type="select">
             <option value="mutect_smchet" selected="True">MuTect</option>
             <option value="sanger">Sanger</option>
-            <option value="oncoscan">Oncoscan</option>
         </param>
         <param name="vcf_file" type="data" format="vcf" help="Variant File"/>
   </inputs>
@@ -29,5 +28,6 @@ ${vcf_file}
         <data format="tabular" name="output_variants" label="SNVs for cloneHD"/>
   </outputs>
   <help>
+	  Create cloneHD/filterHD input from VCFs and Battenberg calls.
   </help>
 </tool>
