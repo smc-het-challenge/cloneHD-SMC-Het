@@ -45,17 +45,6 @@
 		<data format="tabular" name="cna_subclone" type="data" label="tumor.cna.subclone.txt"/>
 		<data format="tabular" name="margin_map" type="data" label="tumor.margin_map.txt"/>
 		<data format="tabular" name="summary" type="data" label="tumor.summary.txt"/>
-		<!--<data format="tabular" name="mean_tcn" type="data" label="mean total copy number" from_work_dir="tumor.mean-tcn.txt"/>-->
-		<!--<data format="tabular" name="avail_cn" type="data" label="available copy number" from_work_dir="tumor.avail-cn.txt"/>-->
-		<!--<data format="tabular" name="baf_gof" type="data" label="baf goodness-of-fit" from_work_dir="tumor.baf.gof.txt"/>-->
-		<!--<data format="tabular" name="baf_posterior" type="data" label="baf posterior" from_work_dir="tumor.baf.posterior.txt"/>-->
-		<!--<data format="tabular" name="baf_" type="data" label="baf subclone" from_work_dir="tumor.baf.subclone.txt"/>-->
-		<!--<data format="tabular" name="baf_used_mean_tcn" type="data" label="baf used mean total copy number" from_work_dir="tumor.baf.used-mean-tcn.txt"/>-->
-		<!--<data format="tabular" name="cna_gof" type="data" label="cna goodness-of-fit" from_work_dir="tumor.cna.gof.txt"/>-->
-		<!--<data format="tabular" name="cna_posterior" type="data" label="cna posterior" from_work_dir="tumor.cna.posterior.txt"/>-->
-		<!--<data format="tabular" name="cna_subclone" type="data" label="cna subclone" from_work_dir="tumor.cna.subclone.txt"/>-->
-		<!--<data format="tabular" name="margin_map" type="data" label="Margin map" from_work_dir="tumor.margin_map.txt"/>-->
-		<!--<data format="tabular" name="summary" type="data" label="Summary" from_work_dir="tumor.summary.txt"/>-->
 	</outputs>
 
 	<help>

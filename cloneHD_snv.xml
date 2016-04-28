@@ -36,11 +36,6 @@
 		<data format="tabular" name="snv_subclone" type="data" label="tumorSNV.snv.subclone.txt"/>
 		<data format="tabular" name="snv_used_mean_tcn" type="data" label="tumorSNV.snv.used-mean-tcn.txt"/>
 		<data format="tabular" name="summary" type="data" label="tumorSNV.summary.txt"/>
-		<!--<data format="tabular" name="margin_map" type="data" label="Margin map" from_work_dir="tumorSNV.margin_map.txt"/>-->
-		<!--<data format="tabular" name="snv_posterior" type="data" label="snv posterior" from_work_dir="tumorSNV.snv.posterior.txt"/>-->
-		<!--<data format="tabular" name="snv_subclone" type="data" label="snv subclone" from_work_dir="tumorSNV.snv.subclone.txt"/>-->
-		<!--<data format="tabular" name="snv_used_mean_tcn" type="data" label="snv used mean total copy number" from_work_dir="tumorSNV.snv.used-mean-tcn.txt"/>-->
-		<!--<data format="tabular" name="summary" type="data" label="Summary" from_work_dir="tumorSNV.summary.txt"/>-->
 	</outputs>
 	
 	<help>
