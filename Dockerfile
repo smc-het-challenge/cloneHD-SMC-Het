@@ -1,4 +1,12 @@
+############################################################
+# Dockerfile to build cloneHD workflow container
+# Based on Ubuntu
+############################################################
+
 FROM ubuntu
+
+# File Author / Maintainer
+MAINTAINER Ignacio Vazquez-Garcia <ivg@sanger.ac.uk>
 
 RUN apt-get update && apt-get install -y gfortran build-essential \
 make gcc build-essential wget libgsl2 gsl-bin libgsl-dev git \

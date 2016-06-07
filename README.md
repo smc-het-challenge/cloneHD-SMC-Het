@@ -13,6 +13,11 @@ To clone this repository, run the following command in a local directory:
 To set up the workflow in a container using `docker`:
 
     $ cd smchet-challenge
-	$ planemo docker_build .
+    $ planemo docker_build .
 
 This will build and compile cloneHD and cloneHD-tools, plus all dependencies.
+
+* Sub-Challenge 1A - Predicting Normal Contamination
+* Sub-Challenge 1B - Predicting Number of Subclones
+* Sub-Challenge 1C - Predicting Subclone Proportions
+* Sub-Challenge 2 - Determining Mutation Assignments to Subclones
