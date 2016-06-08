@@ -6,22 +6,30 @@
     <container type="docker">clonehd-tools:smchet</container>
   </requirements>
   <command>
-<![CDATA[
-python /opt/cloneHD-tools/clonehd/clonehd.py 
---cnas ${cnas}
---output-cnas ${output_cnas}
---output-variants ${output_variants}
---variant-type ${input_type}
-${vcf_file}
-]]></command>
+    <![CDATA[
+    python /opt/cloneHD-tools/clonehd/clonehd.py
+    --output-variants ${output_variants}
+    --variant-type ${input_type}
+    ${vcf_file}
+    perl /opt/cloneHD-tools/clonehd/convert_Battenberg_to_cloneHD_prior.pl 
+    -c ${cnas}
+    -p ${purity}
+    -g ${gender}
+    -m "mean-tcn" > ${output_cnas}
+    ]]>
+    <!-- perl /opt/cloneHD-tools/clonehd/intersect_SNV_with_cn_prior.pl
+    -c ${sample}-avail-cn.txt.cg
+    -s ${sample}.snv.txt > ${sample}.snv.cn.txt -->
+  </command>
   <inputs>
-        <param name="cnas" type="data" format="tabular" optional="false" help="CNAs extracted from Battenberg file using cloneHD CNAs Prep"/>
+        <param name="cnas" type="data" format="tabular" optional="false" help="CNA prior from Battenberg file"/>
+        <param name="purity" type="data" format="tabular" optional="false" help="Purity from Battenberg file"/>
         <param name="only_normal_cn" type="boolean" label="Only report CN regions" help="Only output variants lying in normal CN regions. Do not output CNA data directly."/>
         <param name="input_type" value="Variant Input Type" type="select">
             <option value="mutect_smchet" selected="True">MuTect</option>
-            <option value="sanger">Sanger</option>
         </param>
         <param name="vcf_file" type="data" format="vcf" help="Variant File"/>
+        <param name="gender" type="data" label="Gender" help="" value="male"/>
   </inputs>
   <outputs>
         <data format="tabular" name="output_cnas" label="CNAs for cloneHD"/>
