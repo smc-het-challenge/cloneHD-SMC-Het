@@ -29,8 +29,8 @@ RUN touch /root/.ssh/known_hosts
 # Add github key
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-RUN git clone -b smchet https://github.com/ivazquez/cloneHD.git
+RUN git clone https://github.com/ivazquez/cloneHD.git && cd cloneHD && git checkout smchet
 RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
-RUN git clone -b smchet git@github.com:ivazquez/cloneHD-tools.git
+RUN git clone git@github.com:ivazquez/cloneHD-tools.git && cd cloneHD-tools && git checkout smchet
 RUN cd cloneHD-tools && python setup.py install

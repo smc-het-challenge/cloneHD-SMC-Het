@@ -17,9 +17,6 @@
     --avail-cn ${output_avail_cn}
     ${cna_file}
     ]]>
-    <!-- perl /opt/cloneHD-tools/clonehd/intersect_SNV_with_cn_prior.pl
-    -c ${sample}-avail-cn.txt.cg
-    -s ${sample}.snv.txt > ${sample}.snv.cn.txt -->
   </command>
   <inputs>
         <param name="cna_type" value="Copy Number Input Type" type="select">

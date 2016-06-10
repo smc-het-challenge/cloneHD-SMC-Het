@@ -12,13 +12,20 @@
 	<![CDATA[
 	/opt/cloneHD/build/cloneHD 
 	--snv ${snv}
-	--seed ${seed} --trials ${trials}
-	--nmax ${nmax} --force ${n_clones} --max-tcn ${max_tcn} 
-	--min-jump ${min_jump} --restarts ${restarts} 
-	--mean-tcn ${mean_tcn} --avail-cn ${avail_cn}
-	--snv-rnd ${snv_rnd} --snv-fpfreq ${snv_fpfreq}
-	--snv-fprate ${snv_fprate} --learn-cluster-w ${learn_cluster_w}
-	--snv-pen-high ${snv_pen_high} --print-all ${verbose}
+	--seed ${seed}
+	--trials ${trials}
+	--force ${n_clones}
+	--max-tcn ${max_tcn} 
+	--restarts ${restarts} 
+	--mean-tcn ${mean_tcn}
+	--avail-cn ${avail_cn}
+	--snv-rnd ${snv_rnd}
+	--snv-fpfreq ${snv_fpfreq}
+	--snv-fprate ${snv_fprate}
+	--learn-cluster-w ${learn_cluster_w}
+	--snv-pen-high ${snv_pen_high}
+	--print-all ${verbose}
+	> ${solution}
 	]]>
 	</command>
 
@@ -26,9 +33,7 @@
 		<param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
 		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="1" optional="true"/>
 		<param name="n_clones" type="integer" label="Force number of subclones" help="" value="1"/>
-		<param name="nmax" type="integer" label="The maximum number of subclones to be tried" help="" value="3"/>
 		<param name="max_tcn" type="integer" label="The maximum total copy number to be available" help="" value="8"/>
-		<param name="min_jump" type="float" label="Jump probability threshold" help="" value="1E-2" optional="true"/>
 		<param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="1" optional="true"/>
 		<param format="tabular" name="mean_tcn" type="data" label="Use a fixed mean total copy number for SNV data" help=""/>
 		<param format="tabular" name="avail_cn" type="data" label="Use SNV copy number availablility constraint" help=""/>
@@ -43,11 +48,12 @@
 	</inputs>
 
 	<outputs>
-		<data format="tabular" name="margin_map" type="data" label="tumorSNV.margin_map.txt"/>
-		<data format="tabular" name="snv_posterior" type="data" label="tumorSNV.snv.posterior.txt"/>
-		<data format="tabular" name="snv_subclone" type="data" label="tumorSNV.snv.subclone.txt"/>
-		<data format="tabular" name="snv_used_mean_tcn" type="data" label="tumorSNV.snv.used-mean-tcn.txt"/>
-		<data format="tabular" name="summary" type="data" label="tumorSNV.summary.txt"/>
+	        <data format="tabular" name="solution" type="data" label="solution.txt"/>
+	        <data format="tabular" name="margin_map" type="data" label="out.margin_map.txt"/>
+	        <data format="tabular" name="snv_posterior" type="data" label="out.snv.posterior.txt"/>
+		<data format="tabular" name="snv_subclone" type="data" label="out.snv.subclone.txt"/>
+		<data format="tabular" name="snv_used_mean_tcn" type="data" label="out.snv.used-mean-tcn.txt"/>
+		<data format="tabular" name="summary" type="data" label="out.summary.txt"/>
 	</outputs>
 	
 	<help>
