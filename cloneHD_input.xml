@@ -3,37 +3,44 @@
     <exit_code range="1:" />
   </stdio>
   <requirements>
-    <container type="docker">clonehd-tools:smchet</container>
+    <container type="docker">clonehd:smchet</container>
   </requirements>
   <command>
     <![CDATA[
-    python /opt/cloneHD-tools/clonehd/clonehd.py
-    --output-variants ${output_variants}
-    --variant-type ${input_type}
-    ${vcf_file}
-    perl /opt/cloneHD-tools/clonehd/convert_Battenberg_to_cloneHD_prior.pl 
-    -c ${cnas}
-    -p ${purity}
-    -g ${gender}
-    -m "mean-tcn" > ${output_cnas}
+    python /opt/cloneHD-tools/clonehd/snv_parser.py
+    --output-snvs ${output_snvs}
+    --variant-type ${snv_type}
+    ${vcf_file};
+    python /opt/cloneHD-tools/clonehd/cna_parser.py
+    -f ${cna_type} -c ${purity}
+    --mean-tcn ${output_mean_tcn}
+    --avail-cn ${output_avail_cn}
+    ${cna_file}
     ]]>
     <!-- perl /opt/cloneHD-tools/clonehd/intersect_SNV_with_cn_prior.pl
     -c ${sample}-avail-cn.txt.cg
     -s ${sample}.snv.txt > ${sample}.snv.cn.txt -->
   </command>
   <inputs>
-        <param name="cnas" type="data" format="tabular" optional="false" help="CNA prior from Battenberg file"/>
-        <param name="purity" type="data" format="tabular" optional="false" help="Purity from Battenberg file"/>
+        <param name="cna_type" value="Copy Number Input Type" type="select">
+            <option value="battenberg-smchet" selected="True">Battenberg</option>
+        </param>
+        <param name="cna_file" type="data" format="tabular" optional="false" help="CNA prior from Battenberg file"/>
+        <param name="purity" type="float" optional="false" help="Purity from Battenberg file" value="1.0"/>
         <param name="only_normal_cn" type="boolean" label="Only report CN regions" help="Only output variants lying in normal CN regions. Do not output CNA data directly."/>
-        <param name="input_type" value="Variant Input Type" type="select">
+        <param name="snv_type" value="Variant Input Type" type="select">
             <option value="mutect_smchet" selected="True">MuTect</option>
         </param>
         <param name="vcf_file" type="data" format="vcf" help="Variant File"/>
-        <param name="gender" type="data" label="Gender" help="" value="male"/>
+	<param name="gender" value="Gender" type="select" help="">
+            <option value="male" selected="True">Male</option>
+            <option value="female" selected="False">Female</option>
+	</param>
   </inputs>
   <outputs>
-        <data format="tabular" name="output_cnas" label="CNAs for cloneHD"/>
-        <data format="tabular" name="output_variants" label="SNVs for cloneHD"/>
+        <data format="tabular" name="output_mean_tcn" label="Mean total copy number for cloneHD"/>
+	<data format="tabular" name="output_avail_cn" label="Available copy number for cloneHD"/>
+        <data format="tabular" name="output_snvs" label="SNVs for cloneHD"/>
   </outputs>
   <help>
 	  Create cloneHD/filterHD input from VCFs and Battenberg calls.

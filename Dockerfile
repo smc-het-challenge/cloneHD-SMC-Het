@@ -14,6 +14,8 @@ libblas-dev liblapack-dev python-pip
 
 WORKDIR /opt
 
+RUN pip install PyVCF
+
 # Install software 
 RUN apt-get install -y git
 # Make ssh dir
