@@ -10,7 +10,9 @@
 	
 	<command>
 	<![CDATA[
+	export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
 	/opt/cloneHD/build/cloneHD 
+	--pre sample
 	--snv ${snv}
 	--seed ${seed}
 	--trials ${trials}
@@ -30,6 +32,7 @@
 	</command>
 
 	<inputs>
+	        <!-- <param name="sample" type="text" label="Sample name" help="" value="Tumour1" optional="false"/> -->
 		<param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
 		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="1" optional="true"/>
 		<param name="n_clones" type="integer" label="Force number of subclones" help="" value="1"/>
@@ -42,18 +45,25 @@
 		<param name="snv_rnd" type="float" label="SNV error rate" help="" value="1E-2"/>
 		<param name="snv_fpfreq" type="float" label="SNV false positive freq" help="" value="5E-2"/>
 		<param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="5E-2"/>
-		<param name="learn_cluster_w" type="float" label="SNV false positive rate" help="" value="5E-2"/>
+		<param name="learn_cluster_w" type="integer" label="Learn cluster weights" help="" value="1"/>
 		<param name="snv_pen_high" type="float" label="SNV penalty high" help="" value="3E-1"/>
 		<param name="verbose" type="integer" label="Verbosity of output" help="" value="0"/>
 	</inputs>
-
 	<outputs>
-	        <data format="tabular" name="solution" type="data" label="solution.txt"/>
-	        <data format="tabular" name="margin_map" type="data" label="out.margin_map.txt"/>
-	        <data format="tabular" name="snv_posterior" type="data" label="out.snv.posterior.txt"/>
-		<data format="tabular" name="snv_subclone" type="data" label="out.snv.subclone.txt"/>
-		<data format="tabular" name="snv_used_mean_tcn" type="data" label="out.snv.used-mean-tcn.txt"/>
-		<data format="tabular" name="summary" type="data" label="out.summary.txt"/>
+	        <data format="text" name="solution" type="data" label="Model solution"/>
+	        <data format="tabular" name="margin_map" type="data" label="Margin map" from_work_dir="sample.margin_map.txt"/>
+	        <data format="tabular" name="snv_posterior" type="data" label="SNV posterior" from_work_dir="sample.snv.posterior.txt"/>
+		<data format="tabular" name="snv_subclone" type="data" label="SNV subclone" from_work_dir="sample.snv.subclone-1.txt"/>
+		<data format="tabular" name="snv_used_mean_tcn" type="data" label="Mean total copy number used" from_work_dir="sample.snv.used-mean-tcn.txt"/>
+		<data format="tabular" name="summary" type="data" label="Summary" from_work_dir="sample.summary.txt"/>
+		<data format="text" name="solution" type="data" label="Model solution"/>
+		<!-- <data format="txt" name="report"> -->
+		<!--   <discover_datasets pattern="(?P&lt;designation&gt;.+)\.margin_map\.txt" type="data" ext="tabular" visible="true" label="Margin map" /> -->
+		<!--   <discover_datasets pattern="(?P&lt;designation&gt;.+)\.snv_posterior\.txt" type="data" ext="tabular" visible="true" label="SNV posterior" /> -->
+		<!--   <discover_datasets pattern="(?P&lt;designation&gt;.+)\.snv_subclone\.txt" type="data" ext="tabular" visible="true" label="SNV subclone" /> -->
+		<!--   <discover_datasets pattern="(?P&lt;designation&gt;.+)\.snv_used_mean_tcn\.txt" ext="tabular" visible="true" label="Mean total copy number used" /> -->
+		<!--   <discover_datasets pattern="(?P&lt;designation&gt;.+)\.summary\.txt" ext="tabular" visible="true" label="Summary" /> -->
+		<!-- </data> -->
 	</outputs>
 	
 	<help>

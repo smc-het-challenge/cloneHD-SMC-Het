@@ -12,24 +12,33 @@
     --variant-type ${snv_type}
     ${vcf_file};
     python /opt/cloneHD-tools/clonehd/cna_parser.py
-    -f ${cna_type} -c ${purity}
+    -f ${cna_type}
+    -c ${cellularity_ploidy}
     --mean-tcn ${output_mean_tcn}
     --avail-cn ${output_avail_cn}
     ${cna_file}
     ]]>
   </command>
   <inputs>
-        <param name="cna_type" value="Copy Number Input Type" type="select">
+    <param name="sample" type="select" label="Sample" help="Select the sample to be analysed.">
+        <options from_file="smc_samples.loc">
+          <column name="value" index="1" />
+          <column name="name" index="0" />
+        </options>
+      </param>
+        <param name="cna_type" type="select" value="" label="CNA type" help="Select the input type for copy number.">
             <option value="battenberg-smchet" selected="True">Battenberg</option>
         </param>
-        <param name="cna_file" type="data" format="tabular" optional="false" help="CNA prior from Battenberg file"/>
-        <param name="purity" type="float" optional="false" help="Purity from Battenberg file" value="1.0"/>
+        <param name="cna_file" type="data" format="tabular" optional="false" label="CNA prior" help="Set the CNA prior from a Battenberg file."/>
+	<param name="cellularity_ploidy" type="data" format="tabular" optional="false" label="Cellularity-ploidy" help="Cellularity-ploidy from Battenberg file."/>
+	<!-- <param name="cellularity" type="float" value="1.0" label="Cellularity" /> -->
+	<!-- <param name="cellularity" type="select" data_ref="cellularity_ploidy" dynamic_options="get_options(cellularity_ploidy, cellularity)" label="Cellularity" help=""/> -->
         <param name="only_normal_cn" type="boolean" label="Only report CN regions" help="Only output variants lying in normal CN regions. Do not output CNA data directly."/>
-        <param name="snv_type" value="Variant Input Type" type="select">
+        <param name="snv_type" type="select" label="SNV type">
             <option value="mutect_smchet" selected="True">MuTect</option>
         </param>
-        <param name="vcf_file" type="data" format="vcf" help="Variant File"/>
-	<param name="gender" value="Gender" type="select" help="">
+        <param name="vcf_file" type="data" format="vcf" label="Variant file" help="Select the variant file in VCF format."/>
+	<param name="gender" type="select" label="Gender" help="">
             <option value="male" selected="True">Male</option>
             <option value="female" selected="False">Female</option>
 	</param>
