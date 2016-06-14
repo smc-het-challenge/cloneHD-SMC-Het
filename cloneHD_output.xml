@@ -13,7 +13,6 @@
     ]]>
   </command>
   <inputs>
-        <param name="sample" type="text" optional="false" help="Sample name" value="Tumour1"/>
 	<param name="assignment_probability" type="data" optional="false" help="Assignment probability" label="Assignment probability"/>
   </inputs>
   <outputs>
@@ -21,7 +20,7 @@
         <data format="txt" name="no_clusters" label="Number Clusters (Sub Challenge 1B)" from_work_dir="sample.1B.txt"/>
         <data format="txt" name="proportions" label="Cluster Proportions (Sub Challenge 1C)" from_work_dir="sample.1C.txt"/>
         <data format="txt" name="assignments" label="Cluster Assignments (Sub Challenge 2A)" from_work_dir="sample.2A.txt"/>
-        <data format="txt" name="co_clustering" label="Co-Cluster (Sub Challenge 2B)" from_work_dir="sample.2B.txt"/>
+        <data format="binary" name="co_clustering" label="Co-Cluster (Sub Challenge 2B)" from_work_dir="sample.2B.txt.gz"/>
   </outputs>
   <help>
 	  Create SMC-Het output from cloneHD/filterHD results.

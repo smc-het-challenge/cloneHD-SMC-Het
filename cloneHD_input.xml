@@ -20,12 +20,6 @@
     ]]>
   </command>
   <inputs>
-    <param name="sample" type="select" label="Sample" help="Select the sample to be analysed.">
-        <options from_file="smc_samples.loc">
-          <column name="value" index="1" />
-          <column name="name" index="0" />
-        </options>
-      </param>
         <param name="cna_type" type="select" value="" label="CNA type" help="Select the input type for copy number.">
             <option value="battenberg-smchet" selected="True">Battenberg</option>
         </param>

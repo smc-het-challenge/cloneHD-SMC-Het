@@ -32,12 +32,11 @@
 	</command>
 
 	<inputs>
-	        <!-- <param name="sample" type="text" label="Sample name" help="" value="Tumour1" optional="false"/> -->
 		<param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
-		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="1" optional="true"/>
+		<param name="trials" type="integer" label="The number of independent optimizations" help="" value="3" optional="true"/>
 		<param name="n_clones" type="integer" label="Force number of subclones" help="" value="1"/>
 		<param name="max_tcn" type="integer" label="The maximum total copy number to be available" help="" value="8"/>
-		<param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="1" optional="true"/>
+		<param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="3" optional="true"/>
 		<param format="tabular" name="mean_tcn" type="data" label="Use a fixed mean total copy number for SNV data" help=""/>
 		<param format="tabular" name="avail_cn" type="data" label="Use SNV copy number availablility constraint" help=""/>
 		<param format="tabular" name="snv" type="data" label="Somatic nucleotide variant read count data file" help=""/>

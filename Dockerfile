@@ -8,15 +8,16 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Ignacio Vazquez-Garcia <ivg@sanger.ac.uk>
 
-RUN apt-get update && apt-get install -y gfortran build-essential \
+RUN apt-get update && apt-get install -y gfortran \
 make gcc build-essential wget libgsl2 gsl-bin libgsl-dev git \
-libblas-dev liblapack-dev perl python-pip
+libblas-dev liblapack-dev perl python-pip gzip
 
 WORKDIR /opt
 
 # Install perl modules
 RUN apt-get install -y cpanminus
 RUN cpanm Math::Round
+
 # Install python modules
 RUN pip install PyVCF
 
