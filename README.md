@@ -17,7 +17,8 @@ To set up the workflow in a container using `docker`:
 
 This will build and compile cloneHD and cloneHD-tools, plus all dependencies.
 
-* Sub-Challenge 1A - Predicting Normal Contamination
-* Sub-Challenge 1B - Predicting Number of Subclones
-* Sub-Challenge 1C - Predicting Subclone Proportions
-* Sub-Challenge 2 - Determining Mutation Assignments to Subclones
+* Sub-challenge 1A - Predicting normal contamination
+* Sub-challenge 1B - Predicting number of subclones
+* Sub-challenge 1C - Predicting subclone proportions
+* Sub-challenge 2A - Determining mutation assignments to subclones
+* Sub-challenge 2B - Co-clustering matrix
