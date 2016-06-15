@@ -34,4 +34,4 @@ RUN git clone https://github.com/ivazquez/cloneHD.git && cd cloneHD && git check
 RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
 RUN git clone git@github.com:ivazquez/cloneHD-tools.git && cd cloneHD-tools && git checkout smchet
-RUN cd cloneHD-tools && python setup.py install
+RUN cd cloneHD-tools && python setup.py install && make -f Makefile

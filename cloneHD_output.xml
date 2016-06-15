@@ -9,7 +9,8 @@
     <![CDATA[
     perl /opt/cloneHD-tools/clonehd/convert_to_smchet_format.pl 
     -i ${assignment_probability} 
-    -o sample
+    -o sample;
+    /opt/cloneHD-tools/clonehd/run_metrics ${assignment_probability} | gzip > sample.2B.txt.gz
     ]]>
   </command>
   <inputs>
