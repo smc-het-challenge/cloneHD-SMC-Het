@@ -14,10 +14,6 @@ libblas-dev liblapack-dev perl python-pip gzip
 
 WORKDIR /opt
 
-# Install perl modules
-RUN apt-get install -y cpanminus
-RUN cpanm Math::Round
-
 # Install python modules
 RUN pip install PyVCF
 
