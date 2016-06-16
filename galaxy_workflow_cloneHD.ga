@@ -1,0 +1,628 @@
+{
+    "a_galaxy_workflow": "true", 
+    "annotation": "", 
+    "format-version": "0.1", 
+    "name": "cloneHD", 
+    "steps": {
+        "0": {
+            "annotation": "", 
+            "content_id": null, 
+            "id": 0, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "CNA prior"
+                }
+            ], 
+            "label": null, 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 200, 
+                "top": 551
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"CNA prior\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "747de17d-10dc-4a91-b619-a0b659a5ddac", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "facef286-5c0b-48a7-97d5-18b78ce6279e"
+                }
+            ]
+        }, 
+        "1": {
+            "annotation": "", 
+            "content_id": null, 
+            "id": 1, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "Cellularity-ploidy"
+                }
+            ], 
+            "label": null, 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 202, 
+                "top": 632
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"Cellularity-ploidy\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "eed58317-3eac-4c51-b1e1-41c717a7e12b", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "d6318946-3e5a-4731-9481-36c66794b721"
+                }
+            ]
+        }, 
+        "2": {
+            "annotation": "", 
+            "content_id": null, 
+            "id": 2, 
+            "input_connections": {}, 
+            "inputs": [
+                {
+                    "description": "", 
+                    "name": "Variant file"
+                }
+            ], 
+            "label": null, 
+            "name": "Input dataset", 
+            "outputs": [], 
+            "position": {
+                "left": 203, 
+                "top": 713
+            }, 
+            "tool_errors": null, 
+            "tool_id": null, 
+            "tool_state": "{\"name\": \"Variant file\"}", 
+            "tool_version": null, 
+            "type": "data_input", 
+            "uuid": "125a12c3-a0d6-408a-850b-e0b0e3d9797d", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "output", 
+                    "uuid": "2d290328-9665-4c8e-ae8e-316c07442e67"
+                }
+            ]
+        }, 
+        "3": {
+            "annotation": "", 
+            "content_id": "cloneHD_input", 
+            "id": 3, 
+            "input_connections": {
+                "cellularity_ploidy": {
+                    "id": 1, 
+                    "output_name": "output"
+                }, 
+                "cna_file": {
+                    "id": 0, 
+                    "output_name": "output"
+                }, 
+                "vcf_file": {
+                    "id": 2, 
+                    "output_name": "output"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD - Tool Input Prep", 
+            "outputs": [
+                {
+                    "name": "output_mean_tcn", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "output_avail_cn", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "output_snvs", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 437, 
+                "top": 604
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionoutput_avail_cn": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_avail_cn"
+                }, 
+                "HideDatasetActionoutput_mean_tcn": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_mean_tcn"
+                }, 
+                "HideDatasetActionoutput_snvs": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "output_snvs"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_input", 
+            "tool_state": "{\"__page__\": 0, \"cna_type\": \"\\\"battenberg-smchet\\\"\", \"gender\": \"\\\"male\\\"\", \"vcf_file\": \"null\", \"cna_file\": \"null\", \"sample\": \"\\\"/opt/galaxy/data/Tumour1/Tumour1\\\"\", \"cellularity_ploidy\": \"null\", \"cellularity\": \"null\", \"only_normal_cn\": \"\\\"False\\\"\", \"__rerun_remap_job_id__\": null, \"snv_type\": \"\\\"mutect_smchet\\\"\"}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "6ae5f306-768f-4493-ac0d-41c94945e573", 
+            "workflow_outputs": []
+        }, 
+        "4": {
+            "annotation": "", 
+            "content_id": "cloneHD_2", 
+            "id": 4, 
+            "input_connections": {
+                "avail_cn": {
+                    "id": 3, 
+                    "output_name": "output_avail_cn"
+                }, 
+                "mean_tcn": {
+                    "id": 3, 
+                    "output_name": "output_mean_tcn"
+                }, 
+                "snv": {
+                    "id": 3, 
+                    "output_name": "output_snvs"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD 2 - SNV", 
+            "outputs": [
+                {
+                    "name": "solution", 
+                    "type": "text"
+                }, 
+                {
+                    "name": "margin_map", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_posterior", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_subclone", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_used_mean_tcn", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "summary", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 750.5, 
+                "top": 200
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionmargin_map": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "margin_map"
+                }, 
+                "HideDatasetActionsnv_posterior": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_posterior"
+                }, 
+                "HideDatasetActionsnv_subclone": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_subclone"
+                }, 
+                "HideDatasetActionsnv_used_mean_tcn": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_used_mean_tcn"
+                }, 
+                "HideDatasetActionsolution": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "solution"
+                }, 
+                "HideDatasetActionsummary": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "summary"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_2", 
+            "tool_state": "{\"restarts\": \"\\\"5\\\"\", \"verbose\": \"\\\"0\\\"\", \"n_clones\": \"\\\"1\\\"\", \"__page__\": 0, \"snv_rnd\": \"\\\"0.01\\\"\", \"snv_pen_tree\": \"\\\"0.001\\\"\", \"learn_cluster_w\": \"\\\"0\\\"\", \"mean_tcn\": \"null\", \"avail_cn\": \"null\", \"snv_fpfreq\": \"\\\"0.05\\\"\", \"seed\": \"\\\"123\\\"\", \"snv\": \"null\", \"snv_pen_high\": \"\\\"0.3\\\"\", \"trials\": \"\\\"5\\\"\", \"snv_fprate\": \"\\\"0.05\\\"\", \"max_tcn\": \"\\\"8\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "6580c4f8-beeb-4f65-922b-83ddc179bf1b", 
+            "workflow_outputs": []
+        }, 
+        "5": {
+            "annotation": "", 
+            "content_id": "cloneHD_2", 
+            "id": 5, 
+            "input_connections": {
+                "avail_cn": {
+                    "id": 3, 
+                    "output_name": "output_avail_cn"
+                }, 
+                "mean_tcn": {
+                    "id": 3, 
+                    "output_name": "output_mean_tcn"
+                }, 
+                "snv": {
+                    "id": 3, 
+                    "output_name": "output_snvs"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD 2 - SNV", 
+            "outputs": [
+                {
+                    "name": "solution", 
+                    "type": "text"
+                }, 
+                {
+                    "name": "margin_map", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_posterior", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_subclone", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_used_mean_tcn", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "summary", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 749.5, 
+                "top": 529
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionmargin_map": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "margin_map"
+                }, 
+                "HideDatasetActionsnv_posterior": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_posterior"
+                }, 
+                "HideDatasetActionsnv_subclone": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_subclone"
+                }, 
+                "HideDatasetActionsnv_used_mean_tcn": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_used_mean_tcn"
+                }, 
+                "HideDatasetActionsolution": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "solution"
+                }, 
+                "HideDatasetActionsummary": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "summary"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_2", 
+            "tool_state": "{\"restarts\": \"\\\"5\\\"\", \"verbose\": \"\\\"0\\\"\", \"n_clones\": \"\\\"2\\\"\", \"__page__\": 0, \"snv_rnd\": \"\\\"0.01\\\"\", \"snv_pen_tree\": \"\\\"0.001\\\"\", \"learn_cluster_w\": \"\\\"1\\\"\", \"mean_tcn\": \"null\", \"avail_cn\": \"null\", \"snv_fpfreq\": \"\\\"0.05\\\"\", \"seed\": \"\\\"123\\\"\", \"snv\": \"null\", \"snv_pen_high\": \"\\\"0.3\\\"\", \"trials\": \"\\\"5\\\"\", \"snv_fprate\": \"\\\"0.05\\\"\", \"max_tcn\": \"\\\"8\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "963e29eb-40fb-430e-8f39-07e7c02b965c", 
+            "workflow_outputs": []
+        }, 
+        "6": {
+            "annotation": "", 
+            "content_id": "cloneHD_2", 
+            "id": 6, 
+            "input_connections": {
+                "avail_cn": {
+                    "id": 3, 
+                    "output_name": "output_avail_cn"
+                }, 
+                "mean_tcn": {
+                    "id": 3, 
+                    "output_name": "output_mean_tcn"
+                }, 
+                "snv": {
+                    "id": 3, 
+                    "output_name": "output_snvs"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD 2 - SNV", 
+            "outputs": [
+                {
+                    "name": "solution", 
+                    "type": "text"
+                }, 
+                {
+                    "name": "margin_map", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_posterior", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_subclone", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "snv_used_mean_tcn", 
+                    "type": "tabular"
+                }, 
+                {
+                    "name": "summary", 
+                    "type": "tabular"
+                }
+            ], 
+            "position": {
+                "left": 749.5, 
+                "top": 860
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionmargin_map": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "margin_map"
+                }, 
+                "HideDatasetActionsnv_posterior": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_posterior"
+                }, 
+                "HideDatasetActionsnv_subclone": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_subclone"
+                }, 
+                "HideDatasetActionsnv_used_mean_tcn": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "snv_used_mean_tcn"
+                }, 
+                "HideDatasetActionsolution": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "solution"
+                }, 
+                "HideDatasetActionsummary": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "summary"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_2", 
+            "tool_state": "{\"restarts\": \"\\\"2\\\"\", \"verbose\": \"\\\"0\\\"\", \"n_clones\": \"\\\"3\\\"\", \"__page__\": 0, \"snv_rnd\": \"\\\"0.01\\\"\", \"snv_pen_tree\": \"\\\"0.001\\\"\", \"learn_cluster_w\": \"\\\"3\\\"\", \"mean_tcn\": \"null\", \"avail_cn\": \"null\", \"snv_fpfreq\": \"\\\"0.05\\\"\", \"seed\": \"\\\"123\\\"\", \"snv\": \"null\", \"snv_pen_high\": \"\\\"0.3\\\"\", \"trials\": \"\\\"2\\\"\", \"snv_fprate\": \"\\\"0.05\\\"\", \"max_tcn\": \"\\\"8\\\"\", \"__rerun_remap_job_id__\": null}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "d66f36e4-aa58-4ff1-8409-050b91b0b8af", 
+            "workflow_outputs": []
+        }, 
+        "7": {
+            "annotation": "", 
+            "content_id": "cloneHD_model_selection", 
+            "id": 7, 
+            "input_connections": {
+                "Nc1_snv": {
+                    "id": 4, 
+                    "output_name": "snv_posterior"
+                }, 
+                "Nc1_summary": {
+                    "id": 4, 
+                    "output_name": "summary"
+                }, 
+                "Nc2_snv": {
+                    "id": 5, 
+                    "output_name": "snv_posterior"
+                }, 
+                "Nc2_summary": {
+                    "id": 5, 
+                    "output_name": "summary"
+                }, 
+                "Nc3_snv": {
+                    "id": 6, 
+                    "output_name": "snv_posterior"
+                }, 
+                "Nc3_summary": {
+                    "id": 6, 
+                    "output_name": "summary"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD - Tool Model Selection", 
+            "outputs": [
+                {
+                    "name": "assignment_probability", 
+                    "type": "txt"
+                }
+            ], 
+            "position": {
+                "left": 1070.5, 
+                "top": 584
+            }, 
+            "post_job_actions": {
+                "HideDatasetActionassignment_probability": {
+                    "action_arguments": {}, 
+                    "action_type": "HideDatasetAction", 
+                    "output_name": "assignment_probability"
+                }
+            }, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_model_selection", 
+            "tool_state": "{\"__page__\": 0, \"Nc1_summary\": \"null\", \"Nc3_snv\": \"null\", \"Nc2_snv\": \"null\", \"__rerun_remap_job_id__\": null, \"Nc1_snv\": \"null\", \"sample\": \"\\\"Tumour1\\\"\", \"Nc2_summary\": \"null\", \"Nc3_summary\": \"null\"}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "89a2c50e-2462-44ea-9da1-7751051f7969", 
+            "workflow_outputs": []
+        }, 
+        "8": {
+            "annotation": "", 
+            "content_id": "cloneHD_output", 
+            "id": 8, 
+            "input_connections": {
+                "assignment_probability": {
+                    "id": 7, 
+                    "output_name": "assignment_probability"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "cloneHD - Tool Output Prep", 
+            "outputs": [
+                {
+                    "name": "cellularity", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "no_clusters", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "proportions", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "assignments", 
+                    "type": "txt"
+                }, 
+                {
+                    "name": "co_clustering", 
+                    "type": "binary"
+                }
+            ], 
+            "position": {
+                "left": 1352, 
+                "top": 585
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "cloneHD_output", 
+            "tool_state": "{\"sample\": \"\\\"Tumour1\\\"\", \"assignment_probability\": \"null\", \"__rerun_remap_job_id__\": null, \"__page__\": 0}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "0d17265e-ad29-465f-8fc0-b0cc616eff7b", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "no_clusters", 
+                    "uuid": "57ec50de-cfc2-40b8-993c-275d1de53e2d"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "assignments", 
+                    "uuid": "4f4ea4b5-9486-48ce-a4b9-e662de42a009"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "proportions", 
+                    "uuid": "b3aa4784-24ca-4416-b0c3-ab6c839ed239"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "cellularity", 
+                    "uuid": "0cd3ff55-4c1e-4927-a5ba-26f262607e84"
+                }, 
+                {
+                    "label": null, 
+                    "output_name": "co_clustering", 
+                    "uuid": "2dcc9ba1-2dbe-463e-8a8c-07fc5801061a"
+                }
+            ]
+        }, 
+        "9": {
+            "annotation": "", 
+            "content_id": "smc_het_eval", 
+            "id": 9, 
+            "input_connections": {
+                "cellularity|predfile": {
+                    "id": 8, 
+                    "output_name": "cellularity"
+                }, 
+                "cluster_assignment|predfile": {
+                    "id": 8, 
+                    "output_name": "assignments"
+                }, 
+                "cocluster_assignment|predfile": {
+                    "id": 8, 
+                    "output_name": "co_clustering"
+                }, 
+                "population|predfile": {
+                    "id": 8, 
+                    "output_name": "no_clusters"
+                }, 
+                "proportion|predfile": {
+                    "id": 8, 
+                    "output_name": "proportions"
+                }
+            }, 
+            "inputs": [], 
+            "label": null, 
+            "name": "SMC-Het Evaluator", 
+            "outputs": [
+                {
+                    "name": "outfile", 
+                    "type": "txt"
+                }
+            ], 
+            "position": {
+                "left": 1618, 
+                "top": 583
+            }, 
+            "post_job_actions": {}, 
+            "tool_errors": null, 
+            "tool_id": "smc_het_eval", 
+            "tool_state": "{\"cocluster_assignment\": \"{\\\"ancestor\\\": {\\\"submit\\\": \\\"no\\\", \\\"__current_case__\\\": 1}, \\\"predfile\\\": null, \\\"submit\\\": \\\"yes\\\", \\\"__current_case__\\\": 0}\", \"__page__\": 0, \"approx\": \"{\\\"enable\\\": \\\"no\\\", \\\"__current_case__\\\": 1}\", \"__rerun_remap_job_id__\": null, \"proportion\": \"{\\\"predfile\\\": null, \\\"submit\\\": \\\"yes\\\", \\\"__current_case__\\\": 0}\", \"sample\": \"\\\"/opt/galaxy/data/Tumour2/Tumour2\\\"\", \"cellularity\": \"{\\\"predfile\\\": null, \\\"submit\\\": \\\"yes\\\", \\\"__current_case__\\\": 0}\", \"cluster_assignment\": \"{\\\"predfile\\\": null, \\\"phylogeny\\\": {\\\"submit\\\": \\\"no\\\", \\\"__current_case__\\\": 1}, \\\"submit\\\": \\\"yes\\\", \\\"__current_case__\\\": 0}\", \"population\": \"{\\\"predfile\\\": null, \\\"submit\\\": \\\"yes\\\", \\\"__current_case__\\\": 0}\"}", 
+            "tool_version": "0.1.0", 
+            "type": "tool", 
+            "uuid": "19562c93-79d1-4602-a015-21658e0957ac", 
+            "workflow_outputs": [
+                {
+                    "label": null, 
+                    "output_name": "outfile", 
+                    "uuid": "299043e4-08fd-4979-b7f8-54fa99f36f5c"
+                }
+            ]
+        }
+    }, 
+    "uuid": "32505834-9d5e-4081-8d09-671a74a3a51c"
+}
