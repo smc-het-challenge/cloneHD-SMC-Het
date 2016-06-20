@@ -7,7 +7,7 @@
   </requirements>
   <command>
     <![CDATA[
-    perl /opt/cloneHD-tools/clonehd/subclone_model_selection.pl 
+    perl /opt/cloneHD-tools/clonehd/subclone_model_selection_cg.pl 
     -i ${Nc1_summary} -j ${Nc1_snv} 
     -k ${Nc2_summary} -l ${Nc2_snv}
     -m ${Nc3_summary} -n ${Nc3_snv} 
