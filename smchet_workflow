@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# set an initial value for the flag
+prefix=false
+input_vcf=false
+input_cna=false
+output_dir=false
+sample_name=false
+show_help=false
+debug=false
+
+if [ $# -eq 0 ];
+then
+    show_help=true
+fi
+
+# read the options
+TEMP=`getopt -o p:v:c:o:s:hd --long pre:,vcf:,cna:,targets:,sample:,bam:,vcf:,output:,help,debug -n 'smchet_workflow' -- "$@"`
+eval set -- "$TEMP"
+
+# extract options and their arguments into variables.
+while true ; do
+    case "$1" in
+        -p|--pre) prefix=$2 ; shift 2 ;;
+        -v|--vcf) input_vcf=$2 ; shift 2 ;;
+        -c|--cna) input_cna=$2 ; shift 2 ;;
+        -o|--output) output_dir=$2 ; shift 2 ;;
+        -s|--sample) sample_name=$2 ; shift 2 ;;
+        -h|--help) show_help=true ; shift ;;
+        -d|--debug) debug=true ; shift ;;
+        --) shift ; break ;;
+        *) echo $2 "Internal error!" ; exit 1 ;;
+    esac
+done
+
+# if [[    $prefix == false
+#       || $input_vcf == false
+#       || $input_cna == false
+#       || $output_dir == false
+#       || $sample_name == false
+#     ]];
+# then
+#     show_help=true
+# fi
+
+if [ $show_help == true ];
+then
+    echo "usage: $0 [options]"
+    echo "options:"
+    echo "    -p, --pre arg       the prefix"
+    echo "    -v, --vcf arg       the VCF file describing the SNV data"
+    echo "    -c, --cna arg       the Battenberg-format segmentation file describing the CNA data"
+    echo "    -o, --output arg    write our output into this directory named dir/sample.cloneHD.gz"
+    echo "    -s, --sample arg    the sample name"
+    echo "    -d, --debug         turns on debugging"
+    echo "    -h, --help          this text"
+    echo "    add --debug for debugging output"
+    echo "Run cloneHD for this region in the output directory."
+    exit
+fi
+
+mkdir -p $output_dir
+
+echo $sample_name
+
+snv=$output_dir/$sample_name.snv.txt
+mean_tcn=$output_dir/$sample_name.mean_tcn.txt
+avail_cn=$output_dir/$sample_name.avail_cn.txt
+
+### SNV parser ###
+dir="/Users/ivg/software/"
+python ${dir}/cloneHD-tools/clonehd/snv_parser.py \
+  --variant-type 'mutect-smchet' \
+  --output-snvs ${snv}
+${input_vcf}
+
+### CNA parser ###
+python ${dir}/cloneHD-tools/clonehd/cna_parser.py \
+  --cna-format 'battenberg-smchet' \
+  --cellularity 1.0 \
+  --mean-tcn ${mean_tcn} \
+  --avail-cn ${avail_cn} \
+  ${input_cna}
+
+### cloneHD ###
+echo ${snv}
+${dir}/cloneHD/build/cloneHD --pre ${sample} \
+        --snv ${snv} \
+        --seed 123 \
+        --trials 1 \
+        --force 1 \
+        --max-tcn 8 \
+        --restarts 1 \
+        --mean-tcn ${mean_tcn} \
+        --avail-cn ${avail_cn} \
+        --snv-rnd 1E-2 \
+        --snv-fpfreq 5E-2 \
+        --snv-fprate 5E-2 \
+        --learn-cluster-w 1 \
+        --snv-pen-high 3E-1 \
+        --print-all 0 #\
+        # > ${solution}
+
+# ### Model selection ###
+# perl ${dir}/cloneHD-tools/clonehd/subclone_model_selection_cg.pl \
+#   -i ${Nc1_summary} -j ${Nc1_snv} \
+#   -k ${Nc2_summary} -l ${Nc2_snv} \
+#   -m ${Nc3_summary} -n ${Nc3_snv} \
+#   -o ${sample}
+
+# ### SMC-Het conversion ###
+# perl ${dir}/cloneHD-tools/clonehd/convert_to_smchet_format.pl -i ${assignment_probability} -o ${sample}
+# ${dir}/cloneHD-tools/clonehd/run_metrics ${assignment_probability} | gzip > ${sample}.2B.txt.gz
+#
+# ### Scoring ###
+# # Sub-challenge 1A
+# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1A \
+#   --predfiles ${sample}.1A.txt --truthfiles ${sample}.1A_truth.txt -o ${sample}.1A_score.txt
+# # Sub-challenge 1B
+# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1B \
+#   --predfiles ${sample}.1B.txt --truthfiles ${sample}.1B_truth.txt -o ${sample}.1B_score.txt
+# # Sub-challenge 1C
+# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1C \
+#   --predfiles ${sample}.1C.txt --truthfiles ${sample}.1C_truth.txt -o ${sample}.1C_score.txt
+# # Sub-challenge 2A
+# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 2A \
+#   --predfiles ${sample}.2A.txt --truthfiles ${sample}.2A_truth.txt --vcf ${sample}.scoring.vcf -o ${sample}.2A_score.txt
+# # Sub-challenge 2B
+# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 2B \
+#   --predfiles ${sample}.2B.txt.gz --truthfiles ${sample}.2B_truth.txt.gz --vcf ${sample}.scoring.vcf -o ${sample}.2B_score.txt
