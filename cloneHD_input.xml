@@ -15,13 +15,12 @@
     -g "male"
 	-m "mean-tcn"
 	-c ${cna_file}
-    -o ${output_mean_tcn}
+	-o ${output_mean_tcn};
 	perl /opt/cloneHD-tools/clonehd/convert-Battenberg-to-cloneHD-prior-v3.pl
 	-g "male"
 	-m "avail-cn"
 	-c ${cna_file}
 	-o ${output_avail_cn}
-    ${cna_file}
     ]]>
   </command>
   <inputs>
@@ -29,7 +28,7 @@
             <option value="battenberg-smchet" selected="True">Battenberg</option>
         </param>
         <param name="cna_file" type="data" format="tabular" optional="false" label="CNA prior" help="Set the CNA prior from a Battenberg file."/>
-	<!-- <param name="cellularity_ploidy" type="data" format="tabular" optional="false" label="Cellularity-ploidy" help="Cellularity-ploidy from Battenberg file."/>
+	<!-- <param name="cellularity_ploidy" type="data" format="tabular" optional="false" label="Cellularity-ploidy" help="Cellularity-ploidy from Battenberg file."/>-->
 	<!-- <param name="cellularity" type="float" value="1.0" label="Cellularity" /> -->
 	<!-- <param name="cellularity" type="select" data_ref="cellularity_ploidy" dynamic_options="get_options(cellularity_ploidy, cellularity)" label="Cellularity" help=""/> -->
         <param name="only_normal_cn" type="boolean" label="Only report CN regions" help="Only output variants lying in normal CN regions. Do not output CNA data directly."/>
