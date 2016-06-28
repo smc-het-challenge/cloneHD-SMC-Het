@@ -55,7 +55,7 @@ then
     exit
 fi
 
-mkdir -p $output_dir
+# mkdir -p $output_dir
 
 prefix=$sample_name
 snv=$prefix.snv.txt

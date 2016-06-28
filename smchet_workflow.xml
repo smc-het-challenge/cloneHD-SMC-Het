@@ -15,7 +15,8 @@
 	--sample sample
 	--vcf ${snv_file}
 	--cna ${cna_file}
-	--seed ${seed}
+	]]>
+	<!-- --seed ${seed}
 	--trials ${trials}
 	--force ${n_clones}
 	--max-tcn ${max_tcn}
@@ -23,8 +24,7 @@
 	--snv-rnd ${snv_rnd}
 	--snv-fpfreq ${snv_fpfreq}
 	--snv-fprate ${snv_fprate}
-	--snv-pen-high ${snv_pen_high}
-	]]>
+	--snv-pen-high ${snv_pen_high} -->
 	</command>
 
 	<inputs>
