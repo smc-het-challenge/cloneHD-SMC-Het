@@ -8,17 +8,16 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Ignacio Vazquez-Garcia <ivg@sanger.ac.uk>
 
+# Install software
 RUN apt-get update && apt-get install -y gfortran \
-make gcc build-essential wget libgsl2 gsl-bin libgsl-dev git \
-libblas-dev liblapack-dev perl python-pip gzip
+make gcc build-essential wget libgsl2 gsl-bin libgsl-dev libboost-all-dev \
+libblas-dev liblapack-dev git perl python-pip gzip
 
 WORKDIR /opt
 
 # Install python modules
 RUN pip install PyVCF
 
-# Install software 
-RUN apt-get install -y git
 # Make ssh dir
 RUN mkdir /root/.ssh/
 
@@ -34,4 +33,4 @@ RUN git clone https://github.com/ivazquez/cloneHD.git && cd cloneHD && git check
 RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
 RUN git clone git@github.com:ivazquez/cloneHD-tools.git && cd cloneHD-tools && git checkout smchet
-RUN cd cloneHD-tools && python setup.py install && make -f Makefile
+RUN cd cloneHD-tools && python setup.py install && cd clonehd && make -f Makefile
