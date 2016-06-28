@@ -4,9 +4,9 @@ This is a repository for the [cloneHD](http://www.sanger.ac.uk/science/tools/clo
 
 ## Testing
 
-To test 
+To test scoring 
 
-    $ smchet_workflow --sample Tumour1 --vcf Tumour1.mutect.vcf --cna Tumour1.battenberg.txt 
+    $ smchet_workflow --vcf Tumour1.mutect.vcf --cna Tumour1.battenberg.txt --sample Tumour1
 
 ## Cloud
 
