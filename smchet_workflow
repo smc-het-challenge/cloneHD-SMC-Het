@@ -87,6 +87,8 @@ do
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
+	snv_fprate=`zgrep -v ^# $input_vcf | awk 'END {print 1/NR}'` #5E-2
+	
 	${dir}/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \
@@ -99,7 +101,7 @@ do
 		--avail-cn $avail_cn \
 		--snv-rnd 1E-2 \
 		--snv-fpfreq 5E-2 \
-		--snv-fprate 5E-2 \
+		--snv-fprate $snv_fprate \
 		--learn-cluster-w $n_clusters \
 		--snv-pen-high 3E-1 \
 		--print-all 0
