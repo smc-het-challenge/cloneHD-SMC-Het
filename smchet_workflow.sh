@@ -77,35 +77,38 @@ avail_cn=$prefix.avail_cn.txt
 #	${input_cna}
 
 ### cloneHD ###
-declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 ) # 1: 0 2: 1 3: 3
+declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 )
 n_clones=1
+
 while [ $n_clones -le 3 ]
 do
+	
 	summary[$n_clones]=$prefix.Nc$n_clones.summary.txt
 	snv_posterior[$n_clones]=$prefix.Nc$nclones.snv.posterior.txt
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
-	snv_fprate=`zgrep -v ^# $input_vcf | awk 'END {print 500/NR}'` # 5E-2
-
-	echo $n_clones $n_clusters
-#	/opt/cloneHD/build/cloneHD \
-#		--pre $prefix.Nc$n_clones \
-#		--snv $snv \
-#		--seed 123 \
-#		--trials 10 \
-#		--force $n_clones \
-#		--max-tcn 8 \
-#		--restarts 10 \
-#		--mean-tcn $mean_tcn \
-#		--avail-cn $avail_cn \
-#		--snv-rnd 1E-2 \
-#		--snv-fpfreq 5E-2 \
-#		--snv-fprate $snv_fprate \
-#		--learn-cluster-w $n_clusters \
-#		--snv-pen-high 3E-1 \
-#		--print-all 0
+	snv_fprate=`wc -l $snv | awk '{print 800/$1}'`
+	
+	/opt/cloneHD/build/cloneHD \
+		--pre $prefix.Nc$n_clones \
+		--snv $snv \
+		--seed 123 \
+		--trials 10 \
+		--force $n_clones \
+		--max-tcn 8 \
+		--restarts 10 \
+		--mean-tcn $mean_tcn \
+		--avail-cn $avail_cn \
+		--snv-rnd 1E-2 \
+		--snv-fpfreq 5E-2 \
+		--snv-fprate $snv_fprate \
+		--learn-cluster-w $n_clusters \
+		--snv-pen-high 3E-1 \
+		--print-all 0
+	
 	n_clones=`expr $n_clones + 1`
+	
 done
 
 # ### Model selection and SMC-Het conversion ###
@@ -118,9 +121,9 @@ done
 perl /opt/cloneHD-tools/clonehd/subclone_model_selection_cg.pl \
 	-i $summary[1] -j $snv_posterior[1] \
 	-k $summary[2] -l $snv_posterior[2] \
-    -m $summary[3] -n $snv_posterior[3] \
+	-m $summary[3] -n $snv_posterior[3] \
 	-a 10.0 -s 50.0 \
-    -o $prefix
+	-o $prefix
 
 ### SMC-Het conversion ###
 assignment=$prefix.assignment_probability_table.txt

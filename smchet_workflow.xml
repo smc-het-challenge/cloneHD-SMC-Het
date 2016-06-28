@@ -1,8 +1,8 @@
 <tool id="cloneHD_workflow" name="cloneHD workflow" version="0.1.0">
-  
-  <stdio>
-    <exit_code range="1:" />
-  </stdio>
+	
+	<stdio>
+		<exit_code range="1:" />
+	</stdio>
 	
 	<requirements>
 		<container type="docker">clonehd:smchet</container>
