@@ -15,17 +15,17 @@ then
 fi
 
 # read the options
-TEMP=`getopt -o p:v:c:o:s:hd --long pre:,vcf:,cna:,targets:,sample:,bam:,vcf:,output:,help,debug -n 'smchet_workflow' -- "$@"`
+TEMP=`getopt -o p:v:c:s:o:hd --long prefix:,vcf:,cna:,sample:,output:,help,debug -n 'smchet_workflow' -- "$@"`
 eval set -- "$TEMP"
 
-# extract options and their arguments into variables.
+# extract options and their arguments into variables
 while true ; do
     case "$1" in
-        -p|--pre) prefix=$2 ; shift 2 ;;
+        -p|--prefix) prefix=$2 ; shift 2 ;;
         -v|--vcf) input_vcf=$2 ; shift 2 ;;
         -c|--cna) input_cna=$2 ; shift 2 ;;
-        -o|--output) output_dir=$2 ; shift 2 ;;
         -s|--sample) sample_name=$2 ; shift 2 ;;
+        -o|--output) output_dir=$2 ; shift 2 ;;
         -h|--help) show_help=true ; shift ;;
         -d|--debug) debug=true ; shift ;;
         --) shift ; break ;;
@@ -33,35 +33,38 @@ while true ; do
     esac
 done
 
-# if [[    $prefix == false
-#       || $input_vcf == false
-#       || $input_cna == false
-#       || $output_dir == false
-#       || $sample_name == false
-#     ]];
-# then
-#     show_help=true
-# fi
+# do something with the variables -- in this case the lamest possible one :-)
+echo "prefix = $prefix"
+echo "input_vcf = $input_vcf"
+echo "input_cna = $input_cna"
+
+if [[    $prefix == false
+      || $input_vcf == false
+      || $input_cna == false
+      || $sample_name == false
+      || $output_dir == false
+    ]];
+then
+    show_help=true
+fi
 
 if [ $show_help == true ];
 then
     echo "usage: $0 [options]"
     echo "options:"
-    echo "    -p, --pre arg       the prefix"
-    echo "    -v, --vcf arg       the VCF file describing the SNV data"
-    echo "    -c, --cna arg       the Battenberg-format segmentation file describing the CNA data"
-    echo "    -o, --output arg    write our output into this directory named dir/sample.cloneHD.gz"
-    echo "    -s, --sample arg    the sample name"
+    echo "    -p, --prefix arg    prefix"
+    echo "    -v, --vcf arg       VCF file describing the SNV data"
+    echo "    -c, --cna arg       Battenberg-format segmentation file describing the CNA data"
+    echo "    -s, --sample arg    sample name"
+    echo "    -o, --output arg    write output into this directory named dir/sample.cloneHD.gz"
     echo "    -d, --debug         turns on debugging"
     echo "    -h, --help          this text"
     echo "    add --debug for debugging output"
-    echo "Run cloneHD for this region in the output directory."
+    echo "Run cloneHD and save results in the output directory."
     exit
 fi
 
 mkdir -p $output_dir
-
-echo $sample_name
 
 snv=$output_dir/$sample_name.snv.txt
 mean_tcn=$output_dir/$sample_name.mean_tcn.txt
