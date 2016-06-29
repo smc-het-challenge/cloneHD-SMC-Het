@@ -3,8 +3,10 @@
 # set an initial value for the flag
 input_vcf=false
 input_cna=false
-output_dir=false
 sample_name=false
+output_dir=false
+trials=10
+restarts=10
 show_help=false
 debug=false
 
@@ -24,6 +26,9 @@ while true ; do
         -c|--cna) input_cna=$2 ; shift 2 ;;
         -s|--sample) sample_name=$2 ; shift 2 ;;
         -o|--output) output_dir=$2 ; shift 2 ;;
+        -t|--trials) trials=$2 ; shift 2 ;;
+        -r|--restarts) restarts=$2 ; shift 2 ;;
+        -r|--restarts) restarts=$2 ; shift 2 ;;
         -h|--help) show_help=true ; shift ;;
         -d|--debug) debug=true ; shift ;;
         --) shift ; break ;;
@@ -48,6 +53,8 @@ then
     echo "    -c, --cna arg       Battenberg-format segmentation file describing the CNA data"
     echo "    -s, --sample arg    sample name"
     echo "    -o, --output arg    write output into this directory named dir/sample.cloneHD.gz"
+    echo "    -t, --trials arg    number of independent optimizations [default: 10]"
+    echo "    -r, --restarts arg  number of perturbations in local random search mode [default: 10]"
     echo "    -d, --debug         turns on debugging"
     echo "    -h, --help          this text"
     echo "    add --debug for debugging output"
@@ -92,10 +99,10 @@ do
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \
 		--seed 123 \
-		--trials 10 \
 		--force $n_clones \
+		--trials $trials \
+		--restarts $restarts \
 		--max-tcn 8 \
-		--restarts 10 \
 		--mean-tcn $mean_tcn \
 		--avail-cn $avail_cn \
 		--snv-rnd 1E-2 \
