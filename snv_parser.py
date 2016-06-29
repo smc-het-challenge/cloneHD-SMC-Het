@@ -199,7 +199,7 @@ class CnaFormatter(object):
       variant_name = variant[0]
       if variant_name not in cna1_variant_names:
         cna1['overlapping_variants'].append(variant)
-    else:
+      else:
         # If variant already in cna1's list, ignore it. This should only occur
         # if two subclonal CNAs have close to 0.5 frequency each. In this case,
         # we lose information about major/minor status of the cna2 relative to
@@ -478,7 +478,7 @@ class VariantAndCnvGroup(object):
     for variant, ref_reads, alt_reads, total_reads in self._variants_and_reads:
       if len(subsampled) < sample_size and (variant.CHROM, variant.POS) in priority_snvs:
         subsampled.append((variant, alt_reads, total_reads))
-    else:
+      else:
         remaining.append((variant, alt_reads, total_reads))
 
     assert len(subsampled) <= sample_size
@@ -594,7 +594,7 @@ def main():
     help='Output destination for CNAs')
   parser.add_argument('--output-snvs', dest='output_snvs', default='snv_data.txt',
     help='Output destination for variants')
-  parser.add_argument('-v', '--variant-type', dest='input_type', required=True, choices=('mutect-smchet',),
+  parser.add_argument('-v', '--variant-type', dest='input_type', required=True, choices=('mutect_smchet',),
     help='Type of VCF file')
   parser.add_argument('--tumor-sample', dest='tumor_sample',
     help='Name of the tumor sample in the input VCF file. Defaults to last sample if not specified.')
@@ -617,7 +617,7 @@ def main():
   random.seed(1)
 
   grouper = VariantAndCnvGroup()
-  if args.input_type == 'mutect-smchet':
+  if args.input_type == 'mutect_smchet':
     variant_parser = MutectSmchetParser(args.vcf_file, args.tumor_sample)
   variants_and_reads = variant_parser.list_variants()
   grouper.add_variants(variants_and_reads)
