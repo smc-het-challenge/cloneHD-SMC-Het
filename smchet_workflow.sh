@@ -55,26 +55,24 @@ then
     exit
 fi
 
-# mkdir -p $output_dir
-
 prefix=$sample_name
 snv=$prefix.snv.txt
 mean_tcn=$prefix.mean_tcn.txt
 avail_cn=$prefix.avail_cn.txt
 
 ### SNV parser ###
-#python /opt/cloneHD-tools/clonehd/snv_parser.py \
-#	--variant-type 'mutect-smchet' \
-#	--output-snvs ${snv}
-#	${input_vcf}
+python /opt/snv_parser.py \
+	--variant-type 'mutect-smchet' \
+	--output-snvs ${snv} \
+	${input_vcf}
 
 ### CNA parser ###
-#python /opt/cloneHD-tools/clonehd/cna_parser.py \
-#	--cna-format 'battenberg-smchet' \
-#	--cellularity 1.0 \
-#	--mean-tcn ${mean_tcn} \
-#	--avail-cn ${avail_cn} \
-#	${input_cna}
+python /opt/cna_parser.py \
+	--cna-format 'battenberg-smchet' \
+	--cellularity 1.0 \
+	--mean-tcn ${mean_tcn} \
+	--avail-cn ${avail_cn} \
+	${input_cna}
 
 ### cloneHD ###
 declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 )
@@ -89,7 +87,7 @@ do
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
 	snv_fprate=`wc -l $snv | awk '{print 800/$1}'`
-	
+
 	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \
@@ -118,7 +116,7 @@ done
 # 	--output $prefix
 
 ## Model selection ###
-perl /opt/cloneHD-tools/clonehd/subclone_model_selection_cg.pl \
+perl /opt/subclone_model_selection.pl \
 	-i $summary[1] -j $snv_posterior[1] \
 	-k $summary[2] -l $snv_posterior[2] \
 	-m $summary[3] -n $snv_posterior[3] \
@@ -126,23 +124,6 @@ perl /opt/cloneHD-tools/clonehd/subclone_model_selection_cg.pl \
 	-o $prefix
 
 ### SMC-Het conversion ###
-assignment=$prefix.assignment_probability_table.txt
-perl /opt/cloneHD-tools/clonehd/convert_to_smchet_format.pl -i $assignment -o $prefix
-/opt/cloneHD-tools/clonehd/run_metrics $assignment | gzip > $prefix.2B.txt.gz
-
-# ### Scoring ###
-# # Sub-challenge 1A
-# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1A \
-# 	--predfiles $prefix.1A.txt --truthfiles $prefix.1A_truth.txt -o $prefix.1A_score.txt
-# # Sub-challenge 1B
-# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1B \
-# 	--predfiles $prefix.1B.txt --truthfiles $prefix.1B_truth.txt -o $prefix.1B_score.txt
-# # Sub-challenge 1C
-# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 1C \
-# 	--predfiles $prefix.1C.txt --truthfiles $prefix.1C_truth.txt -o $prefix.1C_score.txt
-# # Sub-challenge 2A
-# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 2A \
-# 	--predfiles $prefix.2A.txt --truthfiles $prefix.2A_truth.txt --vcf $prefix.scoring.vcf -o $prefix.2A_score.txt
-# # Sub-challenge 2B
-# python SMC-Het-Challenge/smc_het_eval/SMCScoring.py -c 2B \
-# 	--predfiles $prefix.2B.txt.gz --truthfiles $prefix.2B_truth.txt.gz --vcf $prefix.scoring.vcf -o $prefix.2B_score.txt
+assignment=$prefix.mutation_assignment.txt
+perl /opt/smchet_conversion.pl -i $assignment -o $prefix
+#/opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz

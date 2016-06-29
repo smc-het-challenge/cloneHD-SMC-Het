@@ -1,10 +1,13 @@
 <tool id="cloneHD_model_selection" name="cloneHD - Tool Model Selection" version="0.1.0">
+
   <stdio>
     <exit_code range="1:" />
   </stdio>
+
   <requirements>
     <container type="docker">clonehd:smchet</container>
   </requirements>
+
   <command>
     <![CDATA[
     perl /opt/cloneHD-tools/clonehd/subclone_model_selection_cg.pl 
@@ -16,6 +19,7 @@
 	-s ${cutL};
     ]]>
   </command>
+
   <inputs>
         <param name="Nc1_summary" type="data" optional="false" help="Nc=1 model (summary)" label="Model summary"/>
 	<param name="Nc1_snv" type="data" optional="false" help="Nc=1 model (SNV posterior)" label="SNV posterior"/>
@@ -23,13 +27,16 @@
 	<param name="Nc2_snv" type="data" optional="false" help="Nc=2 model (SNV posterior" label="SNV posterior"/>
         <param name="Nc3_summary" type="data" optional="false" help="Nc=3 model (summary)" label="Model summary"/>
 	<param name="Nc3_snv" type="data" optional="false" help="Nc=3 model (SNV posterior)" label="SNV posterior"/>
-	<param name="cutL" type="float" optional="true" label="Log-likelhood cut off for model selection" help="" value="50.0"/>
+	<param name="cutL" type="float" optional="true" label="Log-likelihood cut-off for model selection" help="" value="50.0"/>
 	<param name="cut" type="float" optional="true" label="Minimum total amount of posterior of high confidence (>0.9) in a cluster" help="" value="10.0"/>
   </inputs>
+
   <outputs>
         <data format="txt" name="assignment_probability" label="Assignment probability table" from_work_dir="sample.assignment_probability_table.txt"/>
   </outputs>
+
   <help>
 	  Create SMC-Het output from cloneHD/filterHD results.
   </help>
+
 </tool>

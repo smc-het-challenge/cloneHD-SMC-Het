@@ -11,20 +11,12 @@
 	<command>
 	<![CDATA[
 	export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
-	smchet_workflow.sh
+	/opt/smchet_workflow.sh
 	--sample sample
 	--vcf ${snv_file}
 	--cna ${cna_file}
+	--output output
 	]]>
-	<!-- --seed ${seed}
-	--trials ${trials}
-	--force ${n_clones}
-	--max-tcn ${max_tcn}
-	--restarts ${restarts}
-	--snv-rnd ${snv_rnd}
-	--snv-fpfreq ${snv_fpfreq}
-	--snv-fprate ${snv_fprate}
-	--snv-pen-high ${snv_pen_high} -->
 	</command>
 
 	<inputs>

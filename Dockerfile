@@ -18,19 +18,9 @@ WORKDIR /opt
 # Install python modules
 RUN pip install PyVCF
 
-# Make ssh dir
-RUN mkdir /root/.ssh/
-
-# Copy over private key, and set permissions
-ADD id_rsa /root/.ssh/id_rsa
-
-# Create known_hosts
-RUN touch /root/.ssh/known_hosts
-# Add github key
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-
+# Install cloneHD
 RUN git clone https://github.com/ivazquez/cloneHD.git && cd cloneHD && git checkout smchet
 RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
-RUN git clone git@github.com:ivazquez/cloneHD-tools.git && cd cloneHD-tools && git checkout smchet
-RUN cd cloneHD-tools && python setup.py install && cd clonehd && make -f Makefile
+# Copy scripts to `WORKDIR`
+COPY smchet_workflow.sh *.pl *.py ./
