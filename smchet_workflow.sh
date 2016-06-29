@@ -69,21 +69,23 @@ avail_cn=$prefix.avail_cn.txt
 ### SNV parser ###
 python /opt/snv_parser.py \
 	--variant-type 'mutect-smchet' \
-	--output-snvs ${snv} \
-	${input_vcf}
+	--output-snvs $snv \
+	$input_vcf
 
 ### CNA parser ###
-perl /opt/cna_parser.pl \
-	-g "male" \
-	-m "mean-tcn" \
-	-c ${input_cna} \
-	-o ${mean_tcn};
+gender=`awk '{if($1==24){sum++}}END{if(sum>5){print "male"}else{print "female"}}' ${snv}`
 
 perl /opt/cna_parser.pl \
-	-g "male" \
+	-g $gender \
+	-m "mean-tcn" \
+	-c $input_cna \
+	-o $mean_tcn
+
+perl /opt/cna_parser.pl \
+	-g $gender \
 	-m "avail-cn" \
-	-c ${input_cna} \
-	-o ${avail_cn};
+	-c $input_cna \
+	-o $avail_cn
 
 ### cloneHD ###
 declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 )
@@ -132,3 +134,10 @@ perl /opt/subclone_model_selection.pl \
 assignment=$prefix.mutation_assignment.txt
 perl /opt/smchet_conversion.pl -i $assignment -o $prefix
 /opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz
+
+if [ $debug == false ];
+then
+    rm -f $snv
+    rm -f $mean_tcn
+		rm -f $avail_cn
+fi
