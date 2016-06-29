@@ -95,7 +95,7 @@ while [ $n_clones -le 3 ]
 do
 	
 	summary[$n_clones]=$prefix.Nc$n_clones.summary.txt
-	snv_posterior[$n_clones]=$prefix.Nc$nclones.snv.posterior.txt
+	snv_posterior[$n_clones]=$prefix.Nc$n_clones.snv.posterior.txt
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
@@ -123,15 +123,20 @@ do
 done
 
 ## Model selection ###
+echo ${summary[1]} ${snv_posterior[1]}
+echo ${summary[2]} ${snv_posterior[2]}
+echo ${summary[3]} ${snv_posterior[3]}
 perl /opt/subclone_model_selection.pl \
-	-i $summary[1] -j $snv_posterior[1] \
-	-k $summary[2] -l $snv_posterior[2] \
-	-m $summary[3] -n $snv_posterior[3] \
-	-a 10.0 -s 50.0 \
-	-o $prefix
+    -i ${summary[1]} -j ${snv_posterior[1]} \
+    -k ${summary[2]} -l ${snv_posterior[2]} \
+    -m ${summary[3]} -n ${snv_posterior[3]} \
+    -a 10.0 -s 50.0 \
+    -o $prefix
 
 ### SMC-Het conversion ###
 assignment=$prefix.mutation_assignment.txt
+echo $assignment
+cat $assignment
 perl /opt/smchet_conversion.pl -i $assignment -o $prefix
 /opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz
 
@@ -139,5 +144,5 @@ if [ $debug == false ];
 then
     rm -f $snv
     rm -f $mean_tcn
-		rm -f $avail_cn
+    rm -f $avail_cn
 fi

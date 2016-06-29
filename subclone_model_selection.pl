@@ -11,9 +11,8 @@ getopts('i:j:k:l:m:n:o:s:a:',\%OPTS);
 
 my $out = $OPTS{o};
 
-my $fileOut1=$out.".mutation_assigment.txt";
+my $fileOut1=$out.".mutation_assignment.txt";
 my $fileOut2=$out.".subclonal_structure.txt";
-
 
 my $summaryI=$OPTS{i};
 my $snvFileI=$OPTS{j};
@@ -42,19 +41,13 @@ my %sumK=%$sumRef;
 printSummary(\@headerI,\%sumI);
 printSummary(\@headerJ,\%sumJ);
 printSummary(\@headerK,\%sumK);
-#
-#
-#
+
 ## get delta log likelihood;
-#
+
 my $line="# n cna-llh baf-llh snv-llh total-llh total-bic";
-#
+
 my @scoreI=split(/\s+/,$sumI{$line}[0]);
-#print @score1,"\n";
-#
 my @scoreJ=split(/\s+/,$sumJ{$line}[0]);
-#print @score2,"\n";
-#
 my @scoreK=split(/\s+/,$sumK{$line}[0]);
 
 my $dL1=$scoreJ[-3]-$scoreI[-3];
@@ -67,6 +60,8 @@ print $dL1, $dL2,"\n";
  
 my $cut=$OPTS{a}; 
 my $cutL=$OPTS{s};
+
+print "Parameters", $cut,$cutL,"\n";
 
 my $model;
 my $cloneSizes;
@@ -102,7 +97,6 @@ sub hqStates{
     my @statesCG;
     my @freqs=split(/\s+/,$values{"#clonal frequencies:"}[0]);
     my @snv=@{$values{"#chr locus PostDist"}};
-#print @states,"\n";
     my @sumP=();
     
     my %clusters;
@@ -126,14 +120,7 @@ sub hqStates{
 	
     }
     
-    
-    # loop over snvs and integrate.
-#print @states,"\n";
-#print @statesCG,"\n";
-    #print scalar(@snv),scalar(@states),"\n"; 
-    #exit(0);
-    
-    
+    # Loop over SNVs and integrate    
     for(my $l=0; $l<scalar(@snv); $l++){
 	my @fields=split(/\s+/,$snv[$l]);
 	
@@ -154,17 +141,11 @@ sub hqStates{
 	}
 	
     }
-    
-#while( my( $key, $value ) = each %clusters ){
-#    print "$key: $value\n";
-#}
 
     my @cloneM=();
     my $nClones=scalar(split(//,$states[0]));
     
     my @cloneSizesV=split(/\s/,$cloneSizes);
-#print $cloneSizes,"\n";
-#print @cloneSizesV,scalar(@cloneSizesV),"\n";
     
     my %clusterFreq;
     
@@ -181,14 +162,12 @@ sub hqStates{
 
     my @bestI=();
     foreach (sort {$clusterFreq{$b} <=> $clusterFreq{$a}} keys %clusterFreq) {
-         #print "$_: $clusterFreq{$_} $clusters{$_} $clustersCG{$_}\n";
-         # do not print out zero cluster.
+        # do not print out zero cluster.
 	if($clustersCG{$_}>$cut){
-	    #print "$cut Included $_: $clusterFreq{$_} $clusters{$_} $clustersCG{$_}\n";
+	    print "$cut Included $_: $clusterFreq{$_} $clusters{$_} $clustersCG{$_}\n";
 	    push(@bestI,$_);
 	}    
     }
-
 
     while( my( $key, $value ) = each %clusters){
 	if(defined $clustersCG{$key}){
@@ -198,8 +177,7 @@ sub hqStates{
 	    print "$key $value 0.0 $clusterFreq{$key}\n";
 	}
     }
-    
-       
+  
     $,= "\t";
     open(my $fh, '>', $fileOut1) or die "Could not open file '$fileOut1' $!";
     print $fh "#\t\t";
@@ -213,9 +191,7 @@ sub hqStates{
 	print $fh "cluster".($i+1),"";
     }
     print $fh "\n";
-    
-    
-    
+        
     for(my $l=0; $l<scalar(@snv); $l++){
 	my @fields=split(/\s+/,$snv[$l]);
 	
@@ -233,9 +209,7 @@ sub hqStates{
 		$sum+=$fields[2+$i];
 	    }
 	}
-	
-	
-	
+		
 	print $fh $fields[0],$fields[1],"";
 	for(my $i=0; $i<scalar(@bestI); $i++){
 	    if($sum!=0.0){
@@ -282,26 +256,21 @@ sub readSNVs{
     return (\@header,\%values);
 }
 
-
 sub printSummary{
     
     my ($ref1,$ref2) = @_;
     my @headerI=@$ref1;
     my %sumI=%$ref2;
-
     
     for(my $i=0; $i<scalar(@headerI); $i++){
 	
-#print scalar(@{$sumI{$headerI[$i]}}), "\n";
 	for(my $j=0; $j<scalar(@{$sumI{$headerI[$i]}}); $j++){
 	    print $headerI[$i],$sumI{$headerI[$i]}[$j],"\n"; 
 	}
 	
-    }
-    
-    
-}
+    }    
 
+}
 
 sub readSummary {
     my ($file) = @_;
@@ -323,20 +292,9 @@ sub readSummary {
 	else{
 	    push(@{$sumI{$headerI[-1]}},$line);
 	}
-   
-   
-	
 	
     };
     close $IN_FILE;
-#for(my $i=0; $i<scalar(@headerI); $i++){
-#
-##print scalar(@{$sumI{$headerI[$i]}}), "\n";
-#for(my $j=0; $j<scalar(@{$sumI{$headerI[$i]}}); $j++){
-#print $headerI[$i],$sumI{$headerI[$i]}[$j],"\n"; 
-#}
-#
-#}
-    return (\@headerI,\%sumI);
- 
+
+    return (\@headerI,\%sumI); 
 };
