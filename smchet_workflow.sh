@@ -67,12 +67,25 @@ python /opt/snv_parser.py \
 	${input_vcf}
 
 ### CNA parser ###
-python /opt/cna_parser.py \
-	--cna-format 'battenberg-smchet' \
-	--cellularity 1.0 \
-	--mean-tcn ${mean_tcn} \
-	--avail-cn ${avail_cn} \
-	${input_cna}
+
+#python /opt/cna_parser.py \
+#	--cna-format 'battenberg-smchet' \
+#	--cellularity 1.0 \
+#	--mean-tcn ${mean_tcn} \
+#	--avail-cn ${avail_cn} \
+#	${input_cna}
+
+perl /opt/convert-Battenberg-to-cloneHD-prior-v3.pl \
+    	-g "male" \
+    	-m "mean-tcn" \
+        -c ${input_cna} \
+        -o ${mean_tcn};
+
+perl /opt/convert-Battenberg-to-cloneHD-prior-v3.pl \
+        -g "male" \
+        -m "avail-cn" \
+        -c ${input_cna} \
+        -o ${avail_cn};
 
 ### cloneHD ###
 declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 )
@@ -126,4 +139,4 @@ perl /opt/subclone_model_selection.pl \
 ### SMC-Het conversion ###
 assignment=$prefix.mutation_assignment.txt
 perl /opt/smchet_conversion.pl -i $assignment -o $prefix
-#/opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz
+/opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz
