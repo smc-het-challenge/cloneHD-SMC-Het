@@ -4,7 +4,7 @@ This is a repository for the [cloneHD](http://www.sanger.ac.uk/science/tools/clo
 
 ## Testing
 
-To test scoring 
+To test the workflow locally, run:
 
     $ smchet_workflow.sh --vcf Tumour1.mutect.vcf --cna Tumour1.battenberg.txt --sample Tumour1
 
@@ -23,7 +23,7 @@ To set up the workflow in a container using `docker`:
     $ cd smchet-challenge
     $ planemo docker_build .
 
-This will build and compile cloneHD and cloneHD-tools, plus all dependencies.
+This will build and compile cloneHD plus all dependencies.
 
 * Sub-challenge 1A - Predicting normal contamination
 * Sub-challenge 1B - Predicting number of subclones
