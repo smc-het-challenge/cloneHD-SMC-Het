@@ -15,10 +15,15 @@
 	--sample sample
 	--vcf ${snv_file}
 	--cna ${cna_file}
+	--trials ${trials}
+	--restarts ${trials}
 	--output output
 	]]>
 	</command>
-
+	<!-- --snv-pen-tree ${snv_pen_tree}
+	--snv-fpfreq ${snv_fpfreq}
+	--snv-pen-high ${snv_pen_high} -->
+	
 	<inputs>
 		<param name="cna_file" type="data" format="tabular" optional="false" label="CNA prior file" help="Set the CNA prior from a Battenberg file."/>
 		<param name="snv_file" type="data" format="vcf" label="Variant file" help="Select the variant file in VCF format."/>
