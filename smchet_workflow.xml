@@ -1,4 +1,4 @@
-<tool id="cloneHD_workflow" name="cloneHD workflow" version="0.1.0">
+<tool id="cloneHD_tool" name="cloneHD tool" version="0.1.0">
 	
 	<stdio>
 		<exit_code range="1:" />
@@ -46,8 +46,9 @@
 		<data format="binary" name="co_clustering" label="Co-Cluster (Sub Challenge 2B)" from_work_dir="sample.2B.txt.gz"/>
 	</outputs>
 	
-	<help>
-	   Using the subclonality analysis with CNA and BAF data, the SNV data is analysed.
+	<help><![CDATA[- Run cloneHD with SNVs and a CNA prior:]]>
+		&#xA;<![CDATA[- - SNVs are called by MuTect VCFs]]>
+		&#xA;<![CDATA[- - Segmentation for CNAs is given by Battenberg calls]]>
 	</help>
 
 </tool>

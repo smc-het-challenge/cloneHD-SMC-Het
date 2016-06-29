@@ -16,7 +16,7 @@ then
 fi
 
 # read the options
-TEMP=`getopt -o v:c:s:o:hd --long vcf:,cna:,sample:,output:,help,debug -n 'smchet_workflow.sh' -- "$@"`
+TEMP=`getopt -o v:c:s:o:t::r::hd --long vcf:,cna:,sample:,output:,trials::,restarts::,help,debug -n 'smchet_workflow.sh' -- "$@"`
 eval set -- "$TEMP"
 
 # extract options and their arguments into variables
@@ -27,7 +27,6 @@ while true ; do
         -s|--sample) sample_name=$2 ; shift 2 ;;
         -o|--output) output_dir=$2 ; shift 2 ;;
         -t|--trials) trials=$2 ; shift 2 ;;
-        -r|--restarts) restarts=$2 ; shift 2 ;;
         -r|--restarts) restarts=$2 ; shift 2 ;;
         -h|--help) show_help=true ; shift ;;
         -d|--debug) debug=true ; shift ;;
@@ -74,25 +73,17 @@ python /opt/snv_parser.py \
 	${input_vcf}
 
 ### CNA parser ###
+perl /opt/cna_parser.pl \
+	-g "male" \
+	-m "mean-tcn" \
+	-c ${input_cna} \
+	-o ${mean_tcn};
 
-#python /opt/cna_parser.py \
-#	--cna-format 'battenberg-smchet' \
-#	--cellularity 1.0 \
-#	--mean-tcn ${mean_tcn} \
-#	--avail-cn ${avail_cn} \
-#	${input_cna}
-
-perl /opt/convert-Battenberg-to-cloneHD-prior-v3.pl \
-    	-g "male" \
-    	-m "mean-tcn" \
-        -c ${input_cna} \
-        -o ${mean_tcn};
-
-perl /opt/convert-Battenberg-to-cloneHD-prior-v3.pl \
-        -g "male" \
-        -m "avail-cn" \
-        -c ${input_cna} \
-        -o ${avail_cn};
+perl /opt/cna_parser.pl \
+	-g "male" \
+	-m "avail-cn" \
+	-c ${input_cna} \
+	-o ${avail_cn};
 
 ### cloneHD ###
 declare -A clones_to_clusters=( [1]=0 [2]=1 [3]=3 )
@@ -128,12 +119,6 @@ do
 	n_clones=`expr $n_clones + 1`
 	
 done
-
-# ### Model selection and SMC-Het conversion ###
-# python ${dir}/cloneHD-tools/clonehd/report.py \
-# 	--summary ${summary[*]} \
-# 	--snv-posterior ${snv_posterior[*]} \
-# 	--output $prefix
 
 ## Model selection ###
 perl /opt/subclone_model_selection.pl \

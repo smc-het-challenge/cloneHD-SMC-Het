@@ -594,7 +594,7 @@ def main():
     help='Output destination for CNAs')
   parser.add_argument('--output-snvs', dest='output_snvs', default='snv_data.txt',
     help='Output destination for variants')
-  parser.add_argument('-v', '--variant-type', dest='input_type', required=True, choices=('mutect_smchet',),
+  parser.add_argument('-v', '--variant-type', dest='input_type', required=True, choices=('mutect-smchet',),
     help='Type of VCF file')
   parser.add_argument('--tumor-sample', dest='tumor_sample',
     help='Name of the tumor sample in the input VCF file. Defaults to last sample if not specified.')
@@ -617,7 +617,7 @@ def main():
   random.seed(1)
 
   grouper = VariantAndCnvGroup()
-  if args.input_type == 'mutect_smchet':
+  if args.input_type == 'mutect-smchet':
     variant_parser = MutectSmchetParser(args.vcf_file, args.tumor_sample)
   variants_and_reads = variant_parser.list_variants()
   grouper.add_variants(variants_and_reads)
