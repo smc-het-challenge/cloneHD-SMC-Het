@@ -70,16 +70,11 @@ mean_tcn=$prefix.mean_tcn.txt
 avail_cn=$prefix.avail_cn.txt
 
 ### SNV parser ###
-#python /opt/snv_parser.py \
-#	--vcf $input_vcf \
-#	--variant-type 'mutect-smchet' \
-#	--snv $snv
 python /opt/snv_parser.py \
-	--variant-type 'mutect-smchet' \
-	--output-snvs ${snv} \
-	${input_vcf}
-
-
+	--vcf $input_vcf \
+	--vcf-type 'mutect-smchet' \
+	--sample 'tumor' \
+	--snv $snv
 
 ### CNA parser ###
 gender=`awk '{if($1==24){sum++}}END{if(sum>5){print "male"}else{print "female"}}' ${snv}`

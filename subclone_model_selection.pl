@@ -118,7 +118,7 @@ sub hqStates{
 		push(@statesCG,$gt);
 	}
 	
-	# Loop over SNVs and integrate    
+	# iterate over SNVs and integrate    
 	for(my $l=0; $l<scalar(@snv); $l++){
 		my @fields=split(/\s+/,$snv[$l]);
 		
@@ -158,7 +158,7 @@ sub hqStates{
 	
 	my @bestI=();
 	foreach (sort {$clusterFreq{$b} <=> $clusterFreq{$a}} keys %clusterFreq) {
-		# do not print out zero cluster.
+		# do not print out zero cluster
 		if($clustersCG{$_}>$cut){
 			print "$cut Included $_: $clusterFreq{$_} $clusters{$_} $clustersCG{$_}\n";
 			push(@bestI,$_);
@@ -272,7 +272,7 @@ sub readSummary {
 	my %sumI;
 	my %sumJ;
 	
-	open my $IN_FILE, '<', $file or die "Cannot open  input file";
+	open my $IN_FILE, '<', $file or die "Cannot open input file";
 	foreach my $line (<$IN_FILE>) {
 		chomp($line);
 		

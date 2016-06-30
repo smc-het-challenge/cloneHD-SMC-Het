@@ -16,7 +16,7 @@ To test the workflow locally, run the shell script:
 
     $ smchet_workflow.sh --vcf Tumour1.mutect.vcf --cna Tumour1.battenberg.txt --sample Tumour1
 
-You can modify the default number of trials providing the optional flag `--trials <int>`, and the number of independent optimizations with the optional flag `--restarts <int>`.
+You can modify the default number of trials providing the optional flag `--trials <int>`, and the number of independent optimizations with the optional flag `--restarts <int>`. You can also set the seed with `--seed <int>`.
 
 ## Cloud testing
 
