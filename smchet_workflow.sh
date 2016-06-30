@@ -107,7 +107,7 @@ do
 	snv_fprate=`wc -l $snv | awk '{print 800/$1}' `
 	
 echo "FP-rate" $snv_fprate "Nsnvs" $n_snvs
-
+echo "Ntrials" $trials "Nrestarts" $restarts
 	# fixed number of trials and restarts for large number of SNVs
 	if [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
 		trials=5
@@ -121,7 +121,7 @@ echo "FP-rate" $snv_fprate "Nsnvs" $n_snvs
 	else
 		:
 	fi
-
+echo "Ntrials" $trials "Nrestarts" $restarts
 	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \

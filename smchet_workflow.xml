@@ -16,7 +16,7 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
 --vcf ${snv_file}
 --cna ${cna_file}
 --trials ${trials}
---restarts ${trials}
+--restarts ${restarts}
 --seed ${seed}
 --output output
 ]]>
