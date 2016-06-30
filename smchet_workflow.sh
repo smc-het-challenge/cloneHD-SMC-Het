@@ -7,6 +7,7 @@ sample_name=false
 output_dir=false
 trials=10
 restarts=10
+seed=123
 show_help=false
 debug=false
 
@@ -16,7 +17,7 @@ then
 fi
 
 # read the options
-TEMP=`getopt -o v:c:s:o:t::r::hd --long vcf:,cna:,sample:,output:,trials::,restarts::,help,debug -n 'smchet_workflow.sh' -- "$@"`
+TEMP=`getopt -o v:c:s:o:t::r::x::hd --long vcf:,cna:,sample:,output:,trials::,restarts::,seed::,help,debug -n 'smchet_workflow.sh' -- "$@"`
 eval set -- "$TEMP"
 
 # extract options and their arguments into variables
@@ -28,6 +29,7 @@ while true ; do
         -o|--output) output_dir=$2 ; shift 2 ;;
         -t|--trials) trials=$2 ; shift 2 ;;
         -r|--restarts) restarts=$2 ; shift 2 ;;
+        -x|--seed) seed=$2 ; shift 2 ;;
         -h|--help) show_help=true ; shift ;;
         -d|--debug) debug=true ; shift ;;
         --) shift ; break ;;
@@ -54,6 +56,7 @@ then
     echo "    -o, --output arg    write output into this directory named dir/sample.cloneHD.gz"
     echo "    -t, --trials arg    number of independent optimizations [default: 10]"
     echo "    -r, --restarts arg  number of perturbations in local random search mode [default: 10]"
+    echo "    -x, --seed arg			seed [default: 123]"
     echo "    -d, --debug         turns on debugging"
     echo "    -h, --help          this text"
     echo "    add --debug for debugging output"
@@ -103,16 +106,13 @@ do
 	snv_fprate=`awk '{print 800/$1}' $n_snvs`
 	
 	# fixed number of trials and restarts for large number of SNVs
-	if [ "$n_snvs" -ge 50000 -le 100000]
-	then
+	if [[ "$n_snvs" -ge 50000 && -le 100000]]; then
 		trials=5
 		restarts=5
-	elif [ "$n_snvs" -ge 100000 -le 500000]
-	then
+	elif [[ "$n_snvs" -ge 100000 && -le 500000]]; then
 		trials=2
 		restarts=2
-	elif [ "$n_snvs" -ge 500000 ]
-	then
+	elif [[ "$n_snvs" -ge 500000 ]]; then
 		trials=1
 		restarts=1
 	else
@@ -122,7 +122,7 @@ do
 	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \
-		--seed 123 \
+		--seed $seed \
 		--force $n_clones \
 		--trials $trials \
 		--restarts $restarts \
@@ -141,9 +141,6 @@ do
 done
 
 ## Model selection ###
-echo ${summary[1]} ${snv_posterior[1]}
-echo ${summary[2]} ${snv_posterior[2]}
-echo ${summary[3]} ${snv_posterior[3]}
 perl /opt/subclone_model_selection.pl \
     -i ${summary[1]} -j ${snv_posterior[1]} \
     -k ${summary[2]} -l ${snv_posterior[2]} \
@@ -153,13 +150,10 @@ perl /opt/subclone_model_selection.pl \
 
 ### SMC-Het conversion ###
 assignment=$prefix.mutation_assignment.txt
-echo $assignment
-cat $assignment
 perl /opt/smchet_conversion.pl -i $assignment -o $prefix
 /opt/run_metrics $assignment | gzip > $prefix.2B.txt.gz
 
-if [ $debug == false ];
-then
+if [ $debug == false ]; then
     rm -f $snv
     rm -f $mean_tcn
     rm -f $avail_cn
