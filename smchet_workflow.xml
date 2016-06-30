@@ -31,7 +31,7 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
     <param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="3" optional="true"/>
     <param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
     <param name="snv_fpfreq" type="float" label="SNV false positive freq" help="" value="5E-2" optional="true"/>
-    <param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="2.4E-6" optional="true"/>
+    <param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="2.66667E-7" optional="true"/>
   </inputs>
 
   <outputs>
