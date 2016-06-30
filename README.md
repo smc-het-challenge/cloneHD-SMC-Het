@@ -1,4 +1,4 @@
-# SMC-Het Challenge
+# cloneHD - SMC-Het Challenge
 
 This is a repository for the [cloneHD](http://www.sanger.ac.uk/science/tools/clonehd) submission to the [SMC-Het Challenge](http://dreamchallenges.org/project/home-upcoming/dream-9-5-icgc-tcga-dream-somatic-mutation-calling-tumor-heterogeneity-challenge-smc-het/). It solves the following sub-challenges:
 
@@ -29,11 +29,11 @@ If you have the [Google Cloud SDK](https://cloud.google.com/sdk/) installed loca
 To clone this repository, run the following command in a local directory. For example:
 
     $ cd /opt/galaxy/tools
-		$ git clone https://github.com/ivazquez/smchet-challenge.git
+    $ git clone https://github.com/ivazquez/cloneHD-SMC-Het.git
 
 To set up the workflow in a container using `docker`:
 
-    $ cd smchet-challenge
+    $ cd cloneHD-SMC-Het
     $ planemo docker_build .
 
 This will build and compile cloneHD plus all dependencies.
