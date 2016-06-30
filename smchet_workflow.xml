@@ -18,6 +18,8 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
 --trials ${trials}
 --restarts ${restarts}
 --seed ${seed}
+--snv-fpfreq ${snv_fpfreq}
+--snv-fprate ${snv_fprate}
 --output output
 ]]>
   </command>
@@ -25,15 +27,11 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
   <inputs>
     <param name="cna_file" type="data" format="tabular" optional="false" label="CNA prior file" help="Set the CNA prior from a Battenberg file."/>
     <param name="snv_file" type="data" format="vcf" label="Variant file" help="Select the variant file in VCF format."/>
-    <param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
     <param name="trials" type="integer" label="The number of independent optimizations" help="" value="3" optional="true"/>
-    <param name="max_tcn" type="integer" label="The maximum total copy number to be available" help="" value="8" optional="true"/>
     <param name="restarts" type="integer" label="The number of perturbations in local random search mode" help="" value="3" optional="true"/>
-    <param name="snv_pen_tree" type="float" label="SNV penalty tree" help="" value="1E-3" optional="true"/>
-    <param name="snv_rnd" type="float" label="SNV error rate" help="" value="1E-2" optional="true"/>
+    <param name="seed" type="integer" label="Seed" help="" value="123" optional="true"/>
     <param name="snv_fpfreq" type="float" label="SNV false positive freq" help="" value="5E-2" optional="true"/>
-    <param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="5E-2" optional="true"/>
-    <param name="snv_pen_high" type="float" label="SNV penalty high" help="" value="3E-1" optional="true"/>
+    <param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="2.4E-6" optional="true"/>
   </inputs>
 
   <outputs>
