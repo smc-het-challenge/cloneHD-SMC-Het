@@ -17,6 +17,7 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
 --cna ${cna_file}
 --trials ${trials}
 --restarts ${trials}
+--seed ${seed}
 --output output
 ]]>
   </command>
