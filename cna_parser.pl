@@ -22,14 +22,14 @@ if($mode eq "mean-tcn"){
 	print $fh "#chr first nLoci last meanCN\n";
 }
 else{
-	print $fh "#chr first nLoci last  genotype-availability via baf\n";
+	print $fh "#chr first nLoci last genotype-availability via baf\n";
 }
 
 my @totalCNV;
 my @logRV;
 my @infoV;
 
-open my $IN_FILE, '<', $copynumberFile or die "Cannot open  input file";
+open my $IN_FILE, '<', $copynumberFile or die "Cannot open input file";
 foreach my $line (<$IN_FILE>) {
 	chomp($line);
 	
@@ -95,7 +95,7 @@ close $IN_FILE;
 
 if($mode eq "mean-tcn"){
 	
-	# Select the state that has cancer-only copy number closest to normal
+	# select the state that has cancer-only copy number closest to normal
 	my $gauge=0.0;
 	my $min=1000.0;
 	
@@ -107,7 +107,7 @@ if($mode eq "mean-tcn"){
 		} 
 	}
 	
-	# Use gauge to fix the d.o.f for the copy number data 
+	# use gauge to fix the d.o.f for the copy number data 
 	for(my $i=0; $i<scalar(@infoV); $i++){
 		
 		my $logR=$logRV[$i];

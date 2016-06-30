@@ -68,9 +68,9 @@ avail_cn=$prefix.avail_cn.txt
 
 ### SNV parser ###
 python /opt/snv_parser.py \
+	--vcf $input_vcf \
 	--variant-type 'mutect-smchet' \
-	--output-snvs $snv \
-	$input_vcf
+	--snv $snv
 
 ### CNA parser ###
 gender=`awk '{if($1==24){sum++}}END{if(sum>5){print "male"}else{print "female"}}' ${snv}`
@@ -99,7 +99,25 @@ do
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
-	snv_fprate=`wc -l $snv | awk '{print 800/$1}'`
+	n_snvs=`wc -l $snv`
+	snv_fprate=`awk '{print 800/$1}' $n_snvs`
+	
+	# fixed number of trials and restarts for large number of SNVs
+	if [ "$n_snvs" -ge 50000 -le 100000]
+	then
+		trials=5
+		restarts=5
+	elif [ "$n_snvs" -ge 100000 -le 500000]
+	then
+		trials=2
+		restarts=2
+	elif [ "$n_snvs" -ge 500000 ]
+	then
+		trials=1
+		restarts=1
+	else
+		:
+	fi
 
 	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \

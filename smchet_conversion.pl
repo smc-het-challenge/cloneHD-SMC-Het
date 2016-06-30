@@ -19,7 +19,7 @@ my %mutC=();
 my @mut=();
 my @probV=();
 
-open my $IN_FILE, '<', $resFile or die "Cannot open  input file";
+open my $IN_FILE, '<', $resFile or die "Cannot open input file";
 foreach my $line (<$IN_FILE>) {
 	chomp($line);
 	
@@ -95,31 +95,29 @@ for(my $i=0; $i<scalar(@mut); $i++){
 }
 close($fh);
 
-
-#open($fh, "| gzip -c > $fileOutCoClusteringM") or die "Could not open file '$fileOutCoClusteringM' $!";
-#for(my $i=0; $i<scalar(@probV); $i++){
-#for(my $j=0; $j<scalar(@probV); $j++){
-#if($j<scalar(@probV)-1){
-#if($i==$j){
-#printf $fh "1\t";
-#}
-#else{
-#printf $fh "%4.3f\t",CoClusterP($probV[$i],$probV[$j]);
-#}
-#}
-#else{
-#if($i==$j){
-#printf $fh "1";
-#}
-#else{
-#printf $fh "%4.3f",CoClusterP($probV[$i],$probV[$j]);
-#}
-#}
-#}
-#printf $fh "\n";
-#}
-#close($fh);
-
+# open($fh, "| gzip -c > $fileOutCoClusteringM") or die "Could not open file '$fileOutCoClusteringM' $!";
+# for(my $i=0; $i<scalar(@probV); $i++){
+# 	for(my $j=0; $j<scalar(@probV); $j++){
+# 		if($j<scalar(@probV)-1){
+# 			if($i==$j){
+# 				printf $fh "1\t";
+# 			}
+# 			else{
+# 				printf $fh "%4.3f\t",CoClusterP($probV[$i],$probV[$j]);
+# 			}
+# 		}
+# 		else{
+# 			if($i==$j){
+# 				printf $fh "1";
+# 			}
+# 			else{
+# 				printf $fh "%4.3f",CoClusterP($probV[$i],$probV[$j]);
+# 			}
+# 		}
+# 	}
+# 	printf $fh "\n";
+# }
+# close($fh);
 
 sub randomDraw{
 	
