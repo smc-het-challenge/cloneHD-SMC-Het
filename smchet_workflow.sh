@@ -70,10 +70,16 @@ mean_tcn=$prefix.mean_tcn.txt
 avail_cn=$prefix.avail_cn.txt
 
 ### SNV parser ###
+#python /opt/snv_parser.py \
+#	--vcf $input_vcf \
+#	--variant-type 'mutect-smchet' \
+#	--snv $snv
 python /opt/snv_parser.py \
-	--vcf $input_vcf \
 	--variant-type 'mutect-smchet' \
-	--snv $snv
+	--output-snvs ${snv} \
+	${input_vcf}
+
+
 
 ### CNA parser ###
 gender=`awk '{if($1==24){sum++}}END{if(sum>5){print "male"}else{print "female"}}' ${snv}`
@@ -102,14 +108,16 @@ do
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
 	
-	n_snvs=`wc -l $snv`
-	snv_fprate=`awk '{print 800/$1}' $n_snvs`
+	n_snvs=`wc -l $snv | awk '{print $1}' `
+	snv_fprate=`wc -l $snv | awk '{print 800/$1}' `
 	
+echo "FP-rate" $snv_fprate "Nsnvs" $n_snvs
+
 	# fixed number of trials and restarts for large number of SNVs
-	if [[ "$n_snvs" -ge 50000 && -le 100000]]; then
+	if [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
 		trials=5
 		restarts=5
-	elif [[ "$n_snvs" -ge 100000 && -le 500000]]; then
+	elif [[ "$n_snvs" -ge 100000 &&  "$n_snvs" -le 500000 ]]; then
 		trials=2
 		restarts=2
 	elif [[ "$n_snvs" -ge 500000 ]]; then
