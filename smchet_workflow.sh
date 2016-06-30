@@ -106,31 +106,27 @@ do
 	snv_posterior[$n_clones]=$prefix.Nc$n_clones.snv.posterior.txt
 	
 	n_clusters=${clones_to_clusters[$n_clones]}
-	
-	n_snvs=`wc -l $snv | awk '{print $1}'`
-	
-	#rescaled_snv_fprate=$(echo "$snv_fprate*3E9/$n_snvs" | bc -l)
+	n_snvs=`wc -l $snv | awk '{print $1}'`	
 	rescaled_snv_fprate=`echo "$snv_fprate $n_snvs" | awk '{print $1*3E9/$2}'`
-	echo $rescaled_snv_fprate
 	
 	# fixed number of trials and restarts for large number of SNVs
 	if [[ "$n_snvs" -ge 25000 &&  "$n_snvs" -le 50000 ]]; then
-                trials=6
-                restarts=6
+                trials=8
+                restarts=8
 	elif [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
+		trials=6
+		restarts=6
+	elif [[ "$n_snvs" -ge 100000 &&  "$n_snvs" -le 500000 ]]; then
 		trials=4
 		restarts=4
-	elif [[ "$n_snvs" -ge 100000 &&  "$n_snvs" -le 500000 ]]; then
+	elif [[ "$n_snvs" -ge 500000 ]]; then
 		trials=2
 		restarts=2
-	elif [[ "$n_snvs" -ge 500000 ]]; then
-		trials=1
-		restarts=1
 	else
 		:
 	fi
 	
-	cmd="/opt/cloneHD/build/cloneHD \
+	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
 		--snv $snv \
 		--seed $seed \
@@ -140,15 +136,13 @@ do
 		--max-tcn 8 \
 		--mean-tcn $mean_tcn \
 		--avail-cn $avail_cn \
-		--snv-rnd 1E-2 \
+		--snv-rnd 1E-4 \
 		--snv-fpfreq $snv_fpfreq \
 		--snv-fprate $rescaled_snv_fprate \
 		--learn-cluster-w $n_clusters \
 		--snv-pen-high 3E-1 \
-		--print-all 0"
-	
-	echo $cmd
-	$cmd
+		--print-all 0
+
 	n_clones=`expr $n_clones + 1`
 	
 done
