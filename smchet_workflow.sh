@@ -37,6 +37,8 @@ while true ; do
     esac
 done
 
+echo $input_vcf $input_cna $sample_name $output_dir $trials $restarts $seed $show_help $debug
+
 if [[    $input_vcf == false
       || $input_cna == false
       || $sample_name == false
@@ -56,7 +58,7 @@ then
     echo "    -o, --output arg    write output into this directory named dir/sample.cloneHD.gz"
     echo "    -t, --trials arg    number of independent optimizations [default: 10]"
     echo "    -r, --restarts arg  number of perturbations in local random search mode [default: 10]"
-    echo "    -x, --seed arg			seed [default: 123]"
+    echo "    -x, --seed arg      seed [default: 123]"
     echo "    -d, --debug         turns on debugging"
     echo "    -h, --help          this text"
     echo "    add --debug for debugging output"
