@@ -73,7 +73,6 @@ my $fileOutPurity=$out.".1A.txt";
 my $fileOutNc=$out.".1B.txt";
 my $fileOutClusters=$out.".1C.txt";
 my $fileOutAssignment=$out.".2A.txt";
-#my $fileOutCoClusteringM=$out.".2B.txt.gz";
 
 open(my $fh, '>', $fileOutPurity) or die "Could not open file '$fileOutPurity' $!";
 print $fh $purity,"\n";
@@ -94,30 +93,6 @@ for(my $i=0; $i<scalar(@mut); $i++){
 	print $fh $mut[$i],"\n";
 }
 close($fh);
-
-# open($fh, "| gzip -c > $fileOutCoClusteringM") or die "Could not open file '$fileOutCoClusteringM' $!";
-# for(my $i=0; $i<scalar(@probV); $i++){
-# 	for(my $j=0; $j<scalar(@probV); $j++){
-# 		if($j<scalar(@probV)-1){
-# 			if($i==$j){
-# 				printf $fh "1\t";
-# 			}
-# 			else{
-# 				printf $fh "%4.3f\t",CoClusterP($probV[$i],$probV[$j]);
-# 			}
-# 		}
-# 		else{
-# 			if($i==$j){
-# 				printf $fh "1";
-# 			}
-# 			else{
-# 				printf $fh "%4.3f",CoClusterP($probV[$i],$probV[$j]);
-# 			}
-# 		}
-# 	}
-# 	printf $fh "\n";
-# }
-# close($fh);
 
 sub randomDraw{
 	

@@ -11,7 +11,7 @@
   <command>
 <![CDATA[
 export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
-/opt/smchet_workflow.sh
+/opt/cloneHD_tool.sh
 --sample sample
 --vcf ${snv_file}
 --cna ${cna_file}

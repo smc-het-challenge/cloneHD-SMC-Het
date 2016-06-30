@@ -74,7 +74,7 @@ mean_tcn=$prefix.mean_tcn.txt
 avail_cn=$prefix.avail_cn.txt
 
 ### SNV parser ###
-python /opt/snv_parser.py \
+python /opt/cloneHD_snv_parser.py \
 	--vcf $input_vcf \
 	--vcf-type 'mutect-smchet' \
 	--sample 'tumor' \
@@ -83,13 +83,13 @@ python /opt/snv_parser.py \
 ### CNA parser ###
 gender=`awk '{if($1==24){sum++}}END{if(sum>5){print "male"}else{print "female"}}' ${snv}`
 
-perl /opt/cna_parser.pl \
+perl /opt/cloneHD_cna_parser.pl \
 	-g $gender \
 	-m "mean-tcn" \
 	-c $input_cna \
 	-o $mean_tcn
 
-perl /opt/cna_parser.pl \
+perl /opt/cloneHD_cna_parser.pl \
 	-g $gender \
 	-m "avail-cn" \
 	-c $input_cna \
@@ -111,8 +111,8 @@ do
 	
 	# fixed number of trials and restarts for large number of SNVs
 	if [[ "$n_snvs" -ge 25000 &&  "$n_snvs" -le 50000 ]]; then
-                trials=8
-                restarts=8
+		trials=8
+		restarts=8
 	elif [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
 		trials=6
 		restarts=6
@@ -148,7 +148,7 @@ do
 done
 
 ## Model selection ###
-perl /opt/subclone_model_selection.pl \
+perl /opt/cloneHD_model_selection.pl \
     -i ${summary[1]} -j ${snv_posterior[1]} \
     -k ${summary[2]} -l ${snv_posterior[2]} \
     -m ${summary[3]} -n ${snv_posterior[3]} \
@@ -157,8 +157,8 @@ perl /opt/subclone_model_selection.pl \
 
 ### SMC-Het conversion ###
 assignment=$prefix.mutation_assignment.txt
-perl /opt/smchet_report.pl -i $assignment -o $prefix
-/opt/smchet_report $assignment | gzip > $prefix.2B.txt.gz
+perl /opt/cloneHD_smchet_report.pl -i $assignment -o $prefix
+/opt/cloneHD_smchet_report $assignment | gzip > $prefix.2B.txt.gz
 
 if [ $debug == false ]; then
     rm -f $snv

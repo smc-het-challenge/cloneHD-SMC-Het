@@ -26,20 +26,14 @@ class VariantParser(object):
     records = []
     for variant in vcfr:
       variant.CHROM = variant.CHROM.lower()
-      # some VCF dialects prepend "chr", some don't. Remove the prefix to
-      # standardize
+      # some VCF dialects prepend "chr", some don't
+      # remove the prefix to standardize
       if variant.CHROM.startswith('chr'):
         variant.CHROM = variant.CHROM[3:]
       records.append(variant)
     return records
 
   def _is_good_chrom(self, chrom):
-    # Ignore the following:
-    #   * Variants unmapped ('chrUn') or mapped to fragmented chromosome ('_random')
-    #   * Weird chromosomes from Mutect (e.g., "chr17_ctg5_hap1").
-    #   * Mitochondrial ("mt" or "m"), which are weird
-    #   * Sex chromosomes difficult to deal with, as expected frequency depends on
-    #     whether patient is male or female, so ignore them for now. TODO: fix this.
     if chrom in [str(i) for i in range(1, 23)]:
       return True
     elif chrom in ['x', 'y']:
@@ -69,10 +63,7 @@ class VariantParser(object):
     return variants
 
   def _get_sample_index(self, variant, sample=None):
-    """Find the index of the tumor sample.
-
-    Currently hardcodes tumour sample as the last column if name not specified.
-    Might not always be true
+    """Find the index of the sample.
     """
     if self._sample:
       sample_is = [i for i, s in enumerate(variant.samples) if s.sample == sample]
@@ -113,7 +104,6 @@ class VariantFormatter(object):
       chrom, pos = variant_key(variant)
 
       yield {
-        'snv_id': snv_id,
         'chrom': chrom,
         'pos': pos,
         'ref_reads': ref_reads,
