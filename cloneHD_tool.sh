@@ -10,6 +10,10 @@ restarts=false
 seed=false
 snv_fprate=false
 snv_fpfreq=false
+snv_pen_high=false
+snv_pen_tree=false
+snv_min_per_cluster=false
+llh_diff=false
 show_help=false
 debug=false
 
@@ -19,7 +23,7 @@ then
 fi
 
 # read the options
-TEMP=`getopt -o v:c:s:o:t:r:x:R:F:hd --long vcf:,cna:,sample:,output:,trials:,restarts:,seed:,snv-fprate:,snv-fpfreq:,help,debug -n 'smchet_workflow.sh' -- "$@"`
+TEMP=`getopt -o v:c:s:o:t:r:x:R:F:H:T:M:L:hd --long vcf:,cna:,sample:,output:,trials:,restarts:,seed:,snv-fprate:,snv-fpfreq:,snv-pen-high:,snv-pen-tree:,snv-min-per-cluster:,llh-diff:,help,debug -n 'smchet_workflow.sh' -- "$@"`
 eval set -- "$TEMP"
 
 # extract options and their arguments into variables
@@ -34,6 +38,10 @@ while true ; do
         -x|--seed) seed=$2 ; shift 2 ;;
         -R|--snv-fprate) snv_fprate=$2 ; shift 2 ;;
         -F|--snv-fpfreq) snv_fpfreq=$2 ; shift 2 ;;
+        -H|--snv-pen-high) snv_pen_high=$2 ; shift 2 ;;
+        -T|--snv-pen-tree) snv_pen_tree=$2 ; shift 2 ;;
+        -M|--snv-min-per-cluster) snv_min_per_cluster=$2 ; shift 2 ;;
+        -L|--llh-diff) llh_diff=$2 ; shift 2 ;;
         -h|--help) show_help=true ; shift ;;
         -d|--debug) debug=true ; shift ;;
         --) shift ; break ;;
@@ -140,7 +148,8 @@ do
 		--snv-fpfreq $snv_fpfreq \
 		--snv-fprate $rescaled_snv_fprate \
 		--learn-cluster-w $n_clusters \
-		--snv-pen-high 3E-1 \
+		--snv-pen-high $snv_pen_high \
+		--snv-pen-tree $snv_pen_tree \
 		--print-all 0
 
 	n_clones=`expr $n_clones + 1`
@@ -152,7 +161,7 @@ perl /opt/cloneHD_model_selection.pl \
     -i ${summary[1]} -j ${snv_posterior[1]} \
     -k ${summary[2]} -l ${snv_posterior[2]} \
     -m ${summary[3]} -n ${snv_posterior[3]} \
-    -a 10.0 -s 50.0 \
+    -a $llh_diff -s $snv_min_per_cluster \
     -o $prefix
 
 ### SMC-Het conversion ###
