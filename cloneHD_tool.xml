@@ -38,8 +38,8 @@ export OMP_NUM_THREADS=\${GALAXY_SLOTS:-1};
     <param name="snv_fprate" type="float" label="SNV false positive rate" help="" value="2.66667E-7" optional="true"/>
     <param name="snv_pen_high" type="float" label="Penalty against high SNV genotypes" help="" value="3E-1" optional="true"/>
     <param name="snv_pen_tree" type="float" label="Penalty against SNVs that break tree structure" help="" value="1E-2" optional="true"/>
-    <param name="snv_min_per_cluster" type="integer" label="Minimum number of SNVs assigned per cluster (only SNVs w/ posterior probability >0.9)" help="" value="50" optional="true"/>
-    <param name="llh_diff" type="float" label="Log-likelihood difference between models of increasing complexity" help="" value="10.0" optional="true"/>
+    <param name="snv_min_per_cluster" type="integer" label="Minimum number of SNVs assigned per cluster (only SNVs w/ posterior probability >0.9)" help="" value="10" optional="true"/>
+    <param name="llh_diff" type="float" label="Log-likelihood difference between models of increasing complexity" help="" value="50.0" optional="true"/>
   </inputs>
 
   <outputs>
