@@ -161,7 +161,7 @@ perl /opt/cloneHD_model_selection.pl \
     -i ${summary[1]} -j ${snv_posterior[1]} \
     -k ${summary[2]} -l ${snv_posterior[2]} \
     -m ${summary[3]} -n ${snv_posterior[3]} \
-    -a $llh_diff -s $snv_min_per_cluster \
+    -a $snv_min_per_cluster -s $llh_diff \
     -o $prefix
 
 ### SMC-Het conversion ###
