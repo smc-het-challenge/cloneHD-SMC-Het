@@ -23,7 +23,7 @@ then
 fi
 
 # read the options
-TEMP=`getopt -o v:c:s:o:t:r:x:R:F:H:T:M:L:hd --long vcf:,cna:,sample:,output:,trials:,restarts:,seed:,snv-fprate:,snv-fpfreq:,snv-pen-high:,snv-pen-tree:,snv-min-per-cluster:,llh-diff:,help,debug -n 'smchet_workflow.sh' -- "$@"`
+TEMP=`getopt -o v:c:s:o:t:r:x:R:F:H:T:M:L:hd --long vcf:,cna:,sample:,output:,trials:,restarts:,seed:,snv-fprate:,snv-fpfreq:,snv-pen-high:,snv-pen-tree:,snv-min-per-cluster:,llh-diff:,help,debug -n 'cloneHD_tool.sh' -- "$@"`
 eval set -- "$TEMP"
 
 # extract options and their arguments into variables
