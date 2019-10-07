@@ -1,0 +1,19 @@
+{
+  "vcf" : {
+    "class" : "File",
+    "path" : "input_vcf"
+  },
+  "cna" : {
+    "class" : "File",
+    "path" : "input_cna"
+  },
+  "id" : "sample_id",
+  "outdir" : {
+    "class" : "Directory",
+    "path" : "output_dir"
+  },
+  "snv_pen_high" : 0.3,
+  "snv_pen_tree" : 0.001,
+  "llh_diff" : 20,
+  "snv_min_per_cluster" : 20
+}
