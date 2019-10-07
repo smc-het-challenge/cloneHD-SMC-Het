@@ -24,4 +24,8 @@ RUN cd cloneHD/src && mkdir ../build && make -f Makefile.farm
 
 # Copy scripts to `WORKDIR`
 COPY cloneHD_tool.sh *.pl *.py *.cpp Makefile ./
-RUN make -f ./Makefile 
+RUN make -f ./Makefile
+
+RUN useradd -ms /bin/bash chiotti
+USER chiotti
+WORKDIR /home/chiotti 
