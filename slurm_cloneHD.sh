@@ -5,4 +5,4 @@
 #$ -S /bin/bash
 #$ -V
 
-sbatch -A spellmanlab --get-user-env ./run_cloneHD.sh $INDIR $TUMOR
+sbatch -A spellmanlab --get-user-env ./run_cloneHD.sh -i $INDIR -t $TUMOR
