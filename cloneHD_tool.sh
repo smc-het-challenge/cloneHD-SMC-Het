@@ -117,22 +117,22 @@ do
 	n_snvs=`wc -l $snv | awk '{print $1}'`	
 	rescaled_snv_fprate=`echo "$snv_fprate $n_snvs" | awk '{print $1*3E9/$2}'`
 	
-#	# fixed number of trials and restarts for large number of SNVs
-#	if [[ "$n_snvs" -ge 25000 &&  "$n_snvs" -le 50000 ]]; then
-#		trials=8
-#		restarts=8
-#	elif [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
-#		trials=6
-#		restarts=6
-#	elif [[ "$n_snvs" -ge 100000 &&  "$n_snvs" -le 500000 ]]; then
-#		trials=4
-#		restarts=4
-#	elif [[ "$n_snvs" -ge 500000 ]]; then
-#		trials=2
-#		restarts=2
-#	else
-#		:
-#	fi
+	# fixed number of trials and restarts for large number of SNVs
+	if [[ "$n_snvs" -ge 25000 &&  "$n_snvs" -le 50000 ]]; then
+		trials=8
+		restarts=8
+	elif [[ "$n_snvs" -ge 50000 &&  "$n_snvs" -le 100000 ]]; then
+		trials=6
+		restarts=6
+	elif [[ "$n_snvs" -ge 100000 &&  "$n_snvs" -le 500000 ]]; then
+		trials=4
+		restarts=4
+	elif [[ "$n_snvs" -ge 500000 ]]; then
+		trials=2
+		restarts=2
+	else
+		:
+	fi
 	
 	/opt/cloneHD/build/cloneHD \
 		--pre $prefix.Nc$n_clones \
