@@ -15,9 +15,9 @@ inputs:
     type: File
     inputBinding:
       prefix: --cna
-  id:
+  sample:
     type: string
-    default: sampleID
+    default: sample_name
     inputBinding:
       prefix: --sample
   outdir:
@@ -43,7 +43,7 @@ inputs:
     type: boolean
     default: false
     inputBinding:
-      prefix: --debugi
+      prefix: --debug
   snv_pen_high:
     type: float
     default: 0.3 
@@ -69,20 +69,20 @@ outputs:
   cellularity:
     type: File
     outputBinding:
-      glob: $(inputs.id).1A.txt
+      glob: $(inputs.sample).1A.txt
   population:
     type: File
     outputBinding:
-      glob: $(inputs.id).1B.txt
+      glob: $(inputs.sample).1B.txt
   proportion:
     type: File
     outputBinding:
-      glob: $(inputs.id).1C.txt
+      glob: $(inputs.sample).1C.txt
   cluster_assignment:
     type: File
     outputBinding:
-      glob: $(inputs.id).2A.txt
+      glob: $(inputs.sample).2A.txt
   cocluster_assignment:
     type: File
     outputBinding:
-      glob: $(inputs.id).2B.txt.gz
+      glob: $(inputs.sample).2B.txt.gz

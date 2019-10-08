@@ -7,7 +7,7 @@
     "class" : "File",
     "path" : "input_cna"
   },
-  "id" : "sample_id",
+  "sample" : "sample_name",
   "outdir" : {
     "class" : "Directory",
     "path" : "output_dir"
